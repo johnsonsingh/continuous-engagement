@@ -1,1 +1,1 @@
-mvn package && java -jar target/gs-spring-boot-0.1.0.jar
+mvn package && java -jar target/continuous-engagement-0.1.0.jar
