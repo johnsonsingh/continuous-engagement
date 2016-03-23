@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>rangeslider.js</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="./rangeslider.css">
+		<link rel="stylesheet" href="./survey.css">
+	</head>
+	<body>
+		<form id="survey" action="http://localhost:8080/api/survey" method="get">
+			<div id="div-achieve">
+				<h2><code>Achievement [contribution, results, satisfaction]</code></h2>
+				<input type="range" min="-5" max="5" step="1" value="0" name="achievement" data-rangeslider>
+				<output></output>
+				<button id="achieve-down"><<</button>
+				<button id="achieve-up" onclick="">>></button>
+			</div>
+			<br>
+			<br>
+			<div id="div-engage">
+				<h2><code>Engagement [inclusion, recognition, involvement, commitment]</code></h2>
+				<input type="range" min="-5" max="5" step="1" value="0" name="engagement" data-rangeslider>
+				<output></output>
+				<button id="engage-down"><<</button>
+				<button id="engage-up" onclick="">>></button>
+			</div>
+			<div id="div-development">
+				<h2><code>Development [learning, growth, opportunity, challenge]</code></h2>
+				<input type="range" min="-5" max="5" step="1" value="0" name="development" data-rangeslider>
+				<output></output>
+				<button id="development-down"><<</button>
+				<button id="development-up" onclick="">>></button>
+			</div>
+			<div id="div-environment">
+				<h2><code>Environment [teamwork, communication, leadership, vision]</code></h2>
+				<input type="range" min="-5" max="5" step="1" value="0" name="environment" data-rangeslider>
+				<output></output>
+				<button id="environment-down"><<</button>
+				<button id="environment-up" onclick="">>></button>
+			</div>
+			<br>
+			<br>
+			<button id="submit">Submit</button>
+		</form>
+		<!-- script src="//localhost:8081"></script -->
+		<script src="./jquery-1.11.3.js"></script>
+		<script src="./rangeslider.js"></script>
+		<script>
+      $(function() {
+
+			var $document = $(document);
+			var selector = '[data-rangeslider]';
+			var $element = $(selector);
+			// For ie8 support
+			var textContent = ('textContent' in document) ? 'textContent' : 'innerText';
+
+			// Example functionality to demonstrate a value feedback
+			function valueOutput(element) {
+				var value = element.value;
+				var output = element.parentNode.getElementsByTagName('output')[0] || element.parentNode.parentNode.getElementsByTagName('output')[0];
+				output[textContent] = value;
+			}
+
+			function decrement(e) {
+				var $inputRange = $(selector, e.target.parentNode);
+				var value = $inputRange.val();
+				--value;
+				$inputRange.val(value).change();
+				return value;
+			}
+
+			function increment(e) {
+				var $inputRange = $(selector, e.target.parentNode);
+				var value = $inputRange.val();
+				++value;
+				$inputRange.val(value).change();
+				return value;
+			}
+			
+			$document.on('input', 'input[type="range"], ' + selector, function(e) {
+				valueOutput(e.target);
+			});
+
+			// up down functionality
+			$document.on('click', '#achieve-up', function(e) {
+				var value = increment(e);
+				console.log(value);
+			});
+			$document.on('click', '#achieve-down', function(e) {
+				var value = decrement(e);
+				console.log(value);
+			});
+			//  up down functionality
+			$document.on('click', '#engage-up', function(e) {
+				var value = increment(e)
+				console.log(value);
+			});
+			$document.on('click', '#engage-down', function(e) {
+				var value = decrement(e);
+				console.log(value);
+			});
+			//  up down functionality
+			$document.on('click', '#environment-up', function(e) {
+				var value = increment(e)
+					console.log(value);
+			});
+			$document.on('click', '#environment-down', function(e) {
+				var value = decrement(e);
+				console.log(value);
+			});
+			//  up down functionality
+			$document.on('click', '#development-up', function(e) {
+				var value = increment(e)
+					console.log(value);
+			});
+			$document.on('click', '#development-down', function(e) {
+				var value = decrement(e);
+				console.log(value);
+			});
+			$document.on('click', '#submit', function(e) {
+				var achieve = $(selector,'#div-achieve').val();
+				var engage =  $(selector,'#div-engage').val();
+				var environment =  $(selector,'#div-environment').val();
+				var development =  $(selector,'#div-development').val();
+				console.log("achieve : "+ achieve + ", engage : "+engage+", development : "+development+ ", environment  : "+environment);
+				$('#survey').submit();
+			});
+			// Basic rangeslider initialization
+		 	$element.rangeslider({
+
+				// Deactivate the feature detection
+				polyfill: false,
+
+				// Callback function
+				onInit: function() {
+					valueOutput(this.$element[0]);
+				},
+
+				// Callback function
+				onSlide: function(position, value) {
+					console.log('onSlide');
+					console.log('position: ' + position, 'value: ' + value);
+				},
+
+				// Callback function   
+				onSlideEnd: function(position, value) {
+					console.log('onSlideEnd');
+					console.log('position: ' + position, 'value: ' + value);
+				}
+			});
+			
+      });
+		</script>
+	</body>
+</html>
