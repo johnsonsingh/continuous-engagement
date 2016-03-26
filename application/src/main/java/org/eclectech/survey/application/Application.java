@@ -86,14 +86,6 @@ public class Application {
 	        .securitySchemes(newArrayList(apiKey()))
 	        .securityContexts(newArrayList(securityContext()))
 	        .enableUrlTemplating(true)
-	        .globalOperationParameters(
-	            newArrayList(new ParameterBuilder()
-	                .name("someGlobalParameter")
-	                .description("Description of someGlobalParameter")
-	                .modelRef(new ModelRef("string"))
-	                .parameterType("query")
-	                .required(true)
-	                .build()))
 	        .tags(new Tag("Engagement Survey", "APIs relating to engagement survey")) 
 	        ;
 	  }

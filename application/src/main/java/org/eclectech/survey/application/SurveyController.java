@@ -17,11 +17,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 
 @RestController
 public class SurveyController {
@@ -34,7 +32,7 @@ public class SurveyController {
 	@Autowired
 	private MongoPersistenceImpl mongoPersistenceImpl;
 
-	@RequestMapping("/survey")
+	@RequestMapping(value="/survey", method = RequestMethod.GET)
 	public List<SurveyResultCount> submitSurvey(@RequestParam("achievement") int achievement,
 			@RequestParam("engagement") int engagement, @RequestParam("development") int development,
 			@RequestParam("culture") int culture) {
@@ -61,7 +59,7 @@ public class SurveyController {
 	 * @param user
 	 * @return all results for user
 	 */
-	@RequestMapping("/results/{user}")
+	@RequestMapping(value="/results/{user}", method = RequestMethod.GET)
 	public List<SurveyResult> getResultsForUser(@PathVariable("user") String user) {
 		logger.debug("for user " + user);
 		return this.surveyResults.getSurveyResults(user);
@@ -75,14 +73,14 @@ public class SurveyController {
 	 *            - format YYYYY-MM-DD
 	 * @return results for user on received day
 	 */
-	@RequestMapping("/results/{user}/{dateAsString}")
+	@RequestMapping(value="/results/{user}/{dateAsString}", method = RequestMethod.GET)
 	public List<SurveyResult> getResultsForUser(@PathVariable("user") String user, @PathVariable String dateAsString) {
 		logger.debug("for user " + user + " date " + dateAsString);
 		Instant instant = parseDateStringAtStartOfDay(dateAsString);
 		return this.surveyResults.getSurveyResults(user, instant);
 	}
 
-	@RequestMapping("/results/date")
+	@RequestMapping(value="/results/date", method = RequestMethod.GET)
 	public List<SurveyResult> getResults(@RequestParam(value = "from", required = true) String fromDateAsString,
 			@RequestParam(value = "to", required = true) String toDateAsString) {
 		logger.debug("getResults from {} to {} ", fromDateAsString, toDateAsString);
@@ -92,14 +90,14 @@ public class SurveyController {
 		return this.surveyResults.getAverageSurveyResults(fromInstant, toInstant);
 	}
 
-	@RequestMapping("/results/date/{dateAsString}")
+	@RequestMapping(value="/results/date/{dateAsString}", method = RequestMethod.GET)
 	public List<SurveyResult> getResults(@PathVariable String dateAsString) {
 		logger.debug("getResults for date {}", dateAsString);
 		Instant instant = parseDateStringAtStartOfDay(dateAsString);
 		return this.surveyResults.getSurveyResults(instant);
 	}
 
-	@RequestMapping("/resultCounts/date/{dateAsString}")
+	@RequestMapping(value="/resultCounts/date/{dateAsString}", method = RequestMethod.GET)
 	public List<SurveyResultCount> getResultCounts(@PathVariable String dateAsString) {
 		logger.debug("getResultCounts for date {}", dateAsString);
 		return getResultCountsForDay(parseDateStringAtStartOfDay(dateAsString));
