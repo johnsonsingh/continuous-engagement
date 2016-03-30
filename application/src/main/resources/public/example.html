@@ -121,11 +121,13 @@
 					.tickSize(0)
 					.tickPadding(6);
 
-				var svg = d3.select("#resultDiv").append("svg")
+				var resultDiv = d3.select("#resultDiv");
+				var svg = resultDiv.append("svg")
 					.attr("width", width + margin.left + margin.right)
 					.attr("height", height + margin.top + margin.bottom)
 					.append("g")
 					.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+				//TODO add reset link URL for link back to initialised survey
 
 				var color = d3.scale.ordinal()
 					.range(["#ff0329", "#ff798d", "#cccccc", "#aeffa0", "#29ff03"]);
@@ -182,12 +184,12 @@
 					.scale(y)
 					.orient("left")
 
-					var svg = d3.select("#resultDiv").append("svg")
-						.attr("width", width + margin.left + margin.right)
-						.attr("height", height + margin.top + margin.bottom)
-						.attr("id", "d3-plot")
-						.append("g")
-						.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+				var svg = d3.select("#resultDiv").append("svg")
+					.attr("width", width + margin.left + margin.right)
+					.attr("height", height + margin.top + margin.bottom)
+					.attr("id", "d3-plot")
+					.append("g")
+					.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 				color.domain(["Strongly disagree", "Disagree", "Neither agree nor disagree", "Agree", "Strongly agree"]);
 
