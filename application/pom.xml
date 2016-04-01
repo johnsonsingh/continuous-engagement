@@ -121,9 +121,9 @@
 				<artifactId>docker-maven-plugin</artifactId>
 				<version>0.2.3</version>
 				<configuration>
-				<serverId>hub.docker.com</serverId>
-				<username></username>
-				<password></password>
+				 <serverId>docker-hub</serverId>
+				  <dockerHost>https://hub.docker.com</dockerHost>
+				    <registryUrl>https://registry.hub.docker.com</registryUrl>
 					<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
 					<dockerDirectory>src/main/docker</dockerDirectory>
 					<resources>
