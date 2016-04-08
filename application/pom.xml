@@ -10,24 +10,24 @@
 	</parent>
 
 	<repositories>
-        <repository>
-            <id>sonatype-snapshots</id>
-            <url>https://oss.sonatype.org/content/ositories/snapshots/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
+		<repository>
+			<id>sonatype-snapshots</id>
+			<url>https://oss.sonatype.org/content/ositories/snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 
-    <pluginRepositories>
-        <pluginRepository>
-            <id>sonatype-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>	
+	<pluginRepositories>
+		<pluginRepository>
+			<id>sonatype-snapshots</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
 
 	<dependencies>
 		<dependency>
@@ -116,25 +116,68 @@
 					</excludes>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>com.spotify</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
-				<version>0.2.3</version>
-				<configuration>
-				 <serverId>docker-hub</serverId>
-				  <dockerHost>https://hub.docker.com</dockerHost>
-				    <registryUrl>https://registry.hub.docker.com</registryUrl>
-					<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-					<dockerDirectory>src/main/docker</dockerDirectory>
-					<resources>
-						<resource>
-							<targetPath>/</targetPath>
-							<directory>${project.build.directory}</directory>
-							<include>${project.build.finalName}.jar</include>
-						</resource>
-					</resources>
-				</configuration>
-			</plugin>
+			<!-- <plugin> -->
+			<!-- <groupId>io.fabric8</groupId> -->
+			<!-- <artifactId>docker-maven-plugin</artifactId> -->
+			<!-- <version>0.14.2</version> -->
+			<!-- </plugin> -->
+			<!-- <plugin> -->
+			<!-- <groupId>com.spotify</groupId> -->
+			<!-- <artifactId>docker-maven-plugin</artifactId> -->
+			<!-- <version>0.4.5</version> -->
+			<!-- <configuration> -->
+			<!-- <serverId>docker-hub</serverId> -->
+			<!-- <dockerHost>https://hub.docker.com</dockerHost> -->
+			<!-- <registryUrl>https://registry.hub.docker.com</registryUrl> -->
+			<!-- <imageName>${docker.image.prefix}/${project.artifactId}</imageName> -->
+			<!-- <dockerDirectory>src/main/docker</dockerDirectory> -->
+			<!-- <resources> -->
+			<!-- <resource> -->
+			<!-- <targetPath>/</targetPath> -->
+			<!-- <directory>${project.build.directory}</directory> -->
+			<!-- <include>${project.build.finalName}.jar</include> -->
+			<!-- </resource> -->
+			<!-- </resources> -->
+			<!-- </configuration> -->
+			<!-- </plugin> -->
+<!-- 			<plugin> -->
+<!-- 				<groupId>net.wouterdanes.docker</groupId> -->
+<!-- 				<artifactId>docker-maven-plugin</artifactId> -->
+<!-- 				<version>5.0.0</version> -->
+<!-- 				<configuration> -->
+<!-- 					<serverId>docker-hub</serverId> -->
+<!-- 				</configuration> -->
+<!-- 				<executions> -->
+<!-- 					<execution> -->
+<!-- 						<id>build</id> -->
+<!-- 						<goals> -->
+<!-- 							<goal>build-images</goal> -->
+<!-- 						</goals> -->
+<!-- 						<configuration> -->
+<!-- 						<serverId>docker-hub</serverId> -->
+<!-- 							<images> -->
+<!-- 								<image> -->
+<!-- 									<id>continuous-integration</id> -->
+<!-- 									<dockerFile>${project.basedir}/src/main/docker/Dockerfile</dockerFile> -->
+<!-- 									<artifacts> -->
+<!-- 									 <artifact> -->
+<!--                 <file>${project.build.directory}/discuss-jar-with-dependencies.jar</file> -->
+<!--               </artifact> -->
+<!-- 									</artifacts> -->
+<!-- 									<mavenArtifacts> -->
+<!-- 									</mavenArtifacts> -->
+<!-- 									<buildArguments> -->
+<!-- 									</buildArguments> -->
+<!-- 									<keep>true</keep> -->
+<!-- 									<push>true</push> -->
+<!-- 									<registry>https://registry.hub.docker.com</registry> -->
+<!-- 									<nameAndTag>spidergawd/continuous-integration</nameAndTag> -->
+<!-- 								</image> -->
+<!-- 							</images> -->
+<!-- 						</configuration> -->
+<!-- 					</execution> -->
+<!-- 				</executions> -->
+<!-- 			</plugin> -->
 		</plugins>
 	</build>
 
