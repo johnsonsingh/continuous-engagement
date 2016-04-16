@@ -11,7 +11,7 @@ import java.util.List;
 import org.eclectech.survey.domain.SurveyResult;
 import org.eclectech.survey.domain.SurveyResultCount;
 import org.eclectech.survey.persist.MongoPersistenceImpl;
-import org.eclectech.survey.persist.SurveyResults;
+import org.eclectech.survey.persist.SurveyResultService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class SurveyController {
 	private static Logger logger = LoggerFactory.getLogger(SurveyController.class);
 
 	@Autowired
-	private SurveyResults surveyResults;
+	private SurveyResultService surveyResults;
 
 	@Autowired
 	private MongoPersistenceImpl mongoPersistenceImpl;
@@ -121,7 +121,7 @@ public class SurveyController {
 	 *            the surveyResults to set
 	 */
 	@Autowired
-	public void setSurveyResults(SurveyResults surveyResults) {
+	public void setSurveyResultService(SurveyResultService surveyResults) {
 		this.surveyResults = surveyResults;
 	}
 

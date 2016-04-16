@@ -28,12 +28,12 @@ import com.mongodb.DBObject;
 public class Aggregations {
 
 	private MongoPersistenceImpl mongoPersistence;
-	private SurveyResultsImpl surveyResults;
+	private SurveyResultServiceImpl surveyResults;
 	private static Logger logger = LoggerFactory.getLogger(Aggregations.class);
 
 	public Aggregations() throws UnknownHostException {
 		mongoPersistence = new MongoPersistenceImpl();
-		surveyResults = new SurveyResultsImpl();
+		surveyResults = new SurveyResultServiceImpl();
 		surveyResults.setMongoPersistenceImpl(mongoPersistence);
 	}
 

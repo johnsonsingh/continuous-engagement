@@ -25,8 +25,8 @@ import org.springframework.stereotype.Service;
 import com.mongodb.DBObject;
 
 @Service
-public class SurveyResultsImpl implements SurveyResults {
-	private static Logger logger = LoggerFactory.getLogger(SurveyResults.class);
+public class SurveyResultServiceImpl implements SurveyResultService {
+	private static Logger logger = LoggerFactory.getLogger(SurveyResultService.class);
 
 	@Autowired
 	private MongoPersistenceImpl mongoPersistenceImpl;

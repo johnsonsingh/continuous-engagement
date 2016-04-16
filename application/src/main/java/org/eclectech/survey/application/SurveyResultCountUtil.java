@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.eclectech.survey.SurveyResultCategories;
 import org.eclectech.survey.domain.SurveyResultCount;
-import org.eclectech.survey.persist.SurveyResults;
+import org.eclectech.survey.persist.SurveyResultService;
 
 public class SurveyResultCountUtil {
 
@@ -16,7 +16,7 @@ public class SurveyResultCountUtil {
 	 * @param surveyResults
 	 * @return
 	 */
-	public static SurveyResultCount create(String attribute, Instant instant, SurveyResults surveyResults) {
+	public static SurveyResultCount create(String attribute, Instant instant, SurveyResultService surveyResults) {
 		SurveyResultCount surveyResultCount = new SurveyResultCount(attribute);
 		Map<Integer, Integer> result = surveyResults.getAggregateCountForDay(attribute, instant);
 
