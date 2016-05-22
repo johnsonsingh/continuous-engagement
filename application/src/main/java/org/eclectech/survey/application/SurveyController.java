@@ -39,19 +39,10 @@ public class SurveyController {
 		Instant now = Instant.now();
 
 		SurveyResult surveyResult = new SurveyResult("user", achievement, engagement, development, culture, now);
-		mongoPersistenceImpl.getMongoOperations().save(surveyResult);
+		mongoPersistenceImpl.getMongoTemplate().save(surveyResult);
 		logger.debug("persisted " + surveyResult);
 
 		return getResultCountsForDay(now);
-	}
-
-	private List<SurveyResultCount> getResultCountsForDay(Instant now) {
-		List<SurveyResultCount> surveyResultCounts = new ArrayList<SurveyResultCount>();
-		surveyResultCounts.add(SurveyResultCountUtil.create("achievement",now,this.surveyResults));
-		surveyResultCounts.add(SurveyResultCountUtil.create("engagement",now,this.surveyResults));
-		surveyResultCounts.add(SurveyResultCountUtil.create("development",now,this.surveyResults));
-		surveyResultCounts.add(SurveyResultCountUtil.create("culture",now,this.surveyResults));
-		return surveyResultCounts;
 	}
 
 	/**
@@ -63,7 +54,6 @@ public class SurveyController {
 	public List<SurveyResult> getResultsForUser(@PathVariable("user") String user) {
 		logger.debug("for user " + user);
 		return this.surveyResults.getSurveyResults(user);
-
 	}
 
 	/**
@@ -104,6 +94,15 @@ public class SurveyController {
 	}
 
 	
+	private List<SurveyResultCount> getResultCountsForDay(Instant now) {
+		List<SurveyResultCount> surveyResultCounts = new ArrayList<SurveyResultCount>();
+		surveyResultCounts.add(SurveyResultCountUtil.create(SurveyCategories.ACHIEVEMENT,now,this.surveyResults));
+		surveyResultCounts.add(SurveyResultCountUtil.create(SurveyCategories.ENGAGEMENT,now,this.surveyResults));
+		surveyResultCounts.add(SurveyResultCountUtil.create(SurveyCategories.DEVELOPMENT,now,this.surveyResults));
+		surveyResultCounts.add(SurveyResultCountUtil.create(SurveyCategories.CULTURE,now,this.surveyResults));
+		return surveyResultCounts;
+	}
+
 	/**
 	 * returns <code>Instant</code> for received date string
 	 * 
@@ -111,7 +110,7 @@ public class SurveyController {
 	 *            format YYYYY-MM-DD
 	 * @return <code>Instant</code>
 	 */
-	private Instant parseDateStringAtStartOfDay(String dateAsString) {
+	protected static Instant parseDateStringAtStartOfDay(String dateAsString) {
 		LocalDateTime dateTime = LocalDate.parse(dateAsString, DateTimeFormatter.ISO_LOCAL_DATE).atStartOfDay();
 		return dateTime.toInstant(ZoneOffset.UTC);
 	}
@@ -121,7 +120,7 @@ public class SurveyController {
 	 *            the surveyResults to set
 	 */
 	@Autowired
-	public void setSurveyResultService(SurveyResultService surveyResults) {
+	protected void setSurveyResultService(SurveyResultService surveyResults) {
 		this.surveyResults = surveyResults;
 	}
 
@@ -130,7 +129,7 @@ public class SurveyController {
 	 *            the mongoPersistenceImpl to set
 	 */
 	@Autowired
-	private void setMongoPersistenceImpl(MongoPersistenceImpl mongoPersistenceImpl) {
+	protected void setMongoPersistenceImpl(MongoPersistenceImpl mongoPersistenceImpl) {
 		this.mongoPersistenceImpl = mongoPersistenceImpl;
 	}
 

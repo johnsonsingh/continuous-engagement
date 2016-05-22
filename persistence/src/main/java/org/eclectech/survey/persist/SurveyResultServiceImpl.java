@@ -44,7 +44,7 @@ public class SurveyResultServiceImpl implements SurveyResultService {
 	public List<SurveyResult> getSurveyResults(String user) {
 		logger.debug("calling for user " + user);
 		Query query = new Query(Criteria.where("user").is(user));
-		return this.mongoPersistenceImpl.getMongoOperations().find(query, SurveyResult.class);
+		return this.mongoPersistenceImpl.getMongoTemplate().find(query, SurveyResult.class);
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class SurveyResultServiceImpl implements SurveyResultService {
 		logger.info("query for user {} instant {}", user, instant);
 		Query query = new Query(
 				Criteria.where("user").is(user).and("instant").gte(instant).lt(instant.plus(Duration.ofDays(1))));
-		return this.mongoPersistenceImpl.getMongoOperations().find(query, SurveyResult.class);
+		return this.mongoPersistenceImpl.getMongoTemplate().find(query, SurveyResult.class);
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class SurveyResultServiceImpl implements SurveyResultService {
 				match(Criteria.where("instant").gte(fromInstant).lt(toInstant)),
 				group("user").avg("achievement").as("achievement").avg("culture").as("culture").avg("development")
 						.as("development").avg("engagement").as("engagement"));
-		AggregationResults<DBObject> result = mongoPersistenceImpl.getMongoOperations().aggregate(aggregation,
+		AggregationResults<DBObject> result = mongoPersistenceImpl.getMongoTemplate().aggregate(aggregation,
 				DBObject.class);
 		List<DBObject> DBObjects = result.getMappedResults();
 		List<SurveyResult> results = new ArrayList<SurveyResult>();
@@ -82,7 +82,7 @@ public class SurveyResultServiceImpl implements SurveyResultService {
 	public List<SurveyResult> getSurveyResults(Instant instant) {
 		logger.info("query for instant {}", instant);
 		Query query = new Query(Criteria.where("instant").gte(instant).lt(instant.plus(Duration.ofDays(1))));
-		return mongoPersistenceImpl.getMongoOperations().find(query, SurveyResult.class);
+		return mongoPersistenceImpl.getMongoTemplate().find(query, SurveyResult.class);
 	}
 	
 	@Override
@@ -93,7 +93,7 @@ public class SurveyResultServiceImpl implements SurveyResultService {
 		TypedAggregation<SurveyResult> aggregation = newAggregation(SurveyResult.class,
 				match(Criteria.where("instant").gte(startOfDay).lt(startOfDay.plus(Duration.ofDays(1)))),
 				group(attribute).count().as("counts"));
-		List<DBObject>dbObjects = this.mongoPersistenceImpl.getMongoOperations().aggregate(aggregation,
+		List<DBObject>dbObjects = this.mongoPersistenceImpl.getMongoTemplate().aggregate(aggregation,
 				DBObject.class).getMappedResults();
 		for (DBObject dbObject : dbObjects) {
 			logger.info("dbobject {} {} {} ", dbObject, dbObject.get("_id"), dbObject.get("counts"));

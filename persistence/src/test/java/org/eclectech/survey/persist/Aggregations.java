@@ -24,7 +24,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.mongodb.DBObject;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
 public class Aggregations {
 
 	private MongoPersistenceImpl mongoPersistence;
@@ -60,7 +60,7 @@ public class Aggregations {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void getAggregateSurveyResults() {
 		logger.info("***************** getAggregateSurveyResults **************************");
 		Instant instant = LocalDateTime.of(2015, 12, 11, 0, 12).toInstant(ZoneOffset.UTC);
@@ -91,7 +91,7 @@ public class Aggregations {
 		}
 		}*/
 	
-	@Test
+	//@Test
 	public void testAggregateForCountForDay() {
 		logger.info("***************** testAggregateForCountForDay **************************");
 		Instant instant = LocalDateTime.of(2015, 12, 11, 0, 12).toInstant(ZoneOffset.UTC);
@@ -122,7 +122,7 @@ public class Aggregations {
 		TypedAggregation<SurveyResult> aggregation = newAggregation(SurveyResult.class,
 				match(Criteria.where("instant").gt(instant).lt(instant.plus(Duration.ofDays(1)))),
 				group(attribute).count().as("counts"));
-		AggregationResults<DBObject> result = this.mongoPersistence.getMongoOperations().aggregate(aggregation,
+		AggregationResults<DBObject> result = this.mongoPersistence.getMongoTemplate().aggregate(aggregation,
 				DBObject.class);
 		List<DBObject>dbObjects = result.getMappedResults();
 		for (DBObject dbObject : dbObjects) {

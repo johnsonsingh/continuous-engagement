@@ -20,7 +20,7 @@ import com.mongodb.MongoClient;
 public class MongoPersistenceImpl implements MongoPersistence {
 
 	private SimpleMongoDbFactory mongoDbFactory;
-	private final MongoTemplate mongoOperations;
+	private final MongoTemplate mongoTemplate;
 
 	public MongoPersistenceImpl() throws UnknownHostException {
 		mongoDbFactory = new SimpleMongoDbFactory(new MongoClient(), "ContinuousEngagement");
@@ -30,9 +30,9 @@ public class MongoPersistenceImpl implements MongoPersistence {
 		mongoConverter.setCustomConversions(getCustomConversions());
 		mongoConverter.afterPropertiesSet();
 
-		this.mongoOperations = new MongoTemplate(mongoDbFactory, mongoConverter);
-		this.mongoOperations.indexOps(SurveyResult.class).ensureIndex(new Index().on("user", Direction.ASC));
-		this.mongoOperations.indexOps(SurveyResult.class).ensureIndex(new Index().on("instant", Direction.ASC));
+		this.mongoTemplate = new MongoTemplate(mongoDbFactory, mongoConverter);
+		this.mongoTemplate.indexOps(SurveyResult.class).ensureIndex(new Index().on("user", Direction.ASC));
+		this.mongoTemplate.indexOps(SurveyResult.class).ensureIndex(new Index().on("instant", Direction.ASC));
 	}
 
 	/**
@@ -46,8 +46,8 @@ public class MongoPersistenceImpl implements MongoPersistence {
 	 * @return the mongoOperations
 	 */
 	@Override
-	public MongoTemplate getMongoOperations() {
-		return mongoOperations;
+	public MongoTemplate getMongoTemplate() {
+		return mongoTemplate;
 	}
 
 }

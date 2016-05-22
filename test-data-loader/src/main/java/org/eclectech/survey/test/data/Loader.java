@@ -56,7 +56,7 @@ public class Loader {
 	@PostConstruct
 	public void populateSurveyResultsForYear() {
 		// drop it
-		this.mongoPersistence.getMongoOperations().dropCollection(SurveyResult.class);
+		this.mongoPersistence.getMongoTemplate().dropCollection(SurveyResult.class);
 		Instant now = Instant.now().truncatedTo(ChronoUnit.DAYS);
 		Instant instant = now.minus(Duration.ofDays(365));
 		// we'll use the same value for all survey users for now
@@ -95,7 +95,7 @@ public class Loader {
 			update.set("development", surveyResult.getDevelopment());
 			update.set("engagement", surveyResult.getEngagement());
 			update.set("instant", instant);
-			mongoPersistence.getMongoOperations().upsert(query,update,SurveyResult.class);
+			mongoPersistence.getMongoTemplate().upsert(query,update,SurveyResult.class);
 			//TODO test that no duplicates for users and day
 			//transition for next iteration
 			surveyResult.setAchievement(transition(surveyResult.getAchievement()));

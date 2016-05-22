@@ -38,7 +38,7 @@ public class SurveyControllerIT {
 
 	@Before
 	public void setUp() throws Exception {
-		this.base = new URL("http://localhost:" + port + "/results/" + "user");
+		this.base = new URL("http://localhost:" + port + "/results/" + "user1");
 		template = new TestRestTemplate();
 	}
 
@@ -58,6 +58,6 @@ public class SurveyControllerIT {
 	@Test
 	public void getSurveyResultsForUserInstant() throws Exception {
 		Instant instant = LocalDateTime.of(2015, 12, 11, 0, 12).toInstant(ZoneOffset.UTC);
-
+        //TODO
 	}
 }
