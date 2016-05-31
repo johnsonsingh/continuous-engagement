@@ -12,7 +12,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan
+@ComponentScan(basePackages = { "org.eclectech.survey" })
 @EnableAutoConfiguration
 public class Application {
 	private static Logger logger = LoggerFactory.getLogger(Application.class);

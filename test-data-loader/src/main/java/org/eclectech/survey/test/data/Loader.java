@@ -15,6 +15,8 @@ import org.eclectech.survey.persist.MongoPersistence;
 import org.eclectech.survey.persist.MongoPersistenceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -25,7 +27,6 @@ public class Loader {
 	private static Logger logger = LoggerFactory.getLogger(Loader.class);
 
 	private static final int MAX_USERS = 100;
-	private MongoPersistence mongoPersistence;
 	private final List<String> users;
 	private int baseAchievement = -1;
 	private int baseEngagement = -2;
@@ -38,8 +39,11 @@ public class Loader {
 			{ 25, 20, 15, 35, 05 }, { 35, 20, 05, 15, 25 }, { 05, 35, 25, 20, 15 } };
 	private Chain chain;
 
-	public Loader() throws UnknownHostException {
-		mongoPersistence = new MongoPersistenceImpl();
+	@Autowired
+	private MongoPersistence mongoPersistence;
+
+	@Autowired
+	public Loader(MongoDbFactory mongoDbFactory) throws UnknownHostException {
 		this.users = buildUsers();
 		this.chain = new Chain(range, probabilities);
 	}

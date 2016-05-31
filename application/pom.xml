@@ -74,16 +74,21 @@
 			<version>0.1.0</version>
 		</dependency>
 		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+		</dependency>
+		<dependency>
 			<groupId>com.jayway.restassured</groupId>
-		    <artifactId>rest-assured</artifactId>
-		    <version>2.9.0</version>
-		    <scope>test</scope>
+			<artifactId>rest-assured</artifactId>
+			<version>2.9.0</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.jayway.restassured</groupId>
 			<artifactId>spring-mock-mvc</artifactId>
-		    <version>2.9.0</version>
-		    <scope>test</scope>
+			<version>2.9.0</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
@@ -152,44 +157,44 @@
 			<!-- </resources> -->
 			<!-- </configuration> -->
 			<!-- </plugin> -->
-<!-- 			<plugin> -->
-<!-- 				<groupId>net.wouterdanes.docker</groupId> -->
-<!-- 				<artifactId>docker-maven-plugin</artifactId> -->
-<!-- 				<version>5.0.0</version> -->
-<!-- 				<configuration> -->
-<!-- 					<serverId>docker-hub</serverId> -->
-<!-- 				</configuration> -->
-<!-- 				<executions> -->
-<!-- 					<execution> -->
-<!-- 						<id>build</id> -->
-<!-- 						<goals> -->
-<!-- 							<goal>build-images</goal> -->
-<!-- 						</goals> -->
-<!-- 						<configuration> -->
-<!-- 						<serverId>docker-hub</serverId> -->
-<!-- 							<images> -->
-<!-- 								<image> -->
-<!-- 									<id>continuous-integration</id> -->
-<!-- 									<dockerFile>${project.basedir}/src/main/docker/Dockerfile</dockerFile> -->
-<!-- 									<artifacts> -->
-<!-- 									 <artifact> -->
-<!--                 <file>${project.build.directory}/discuss-jar-with-dependencies.jar</file> -->
-<!--               </artifact> -->
-<!-- 									</artifacts> -->
-<!-- 									<mavenArtifacts> -->
-<!-- 									</mavenArtifacts> -->
-<!-- 									<buildArguments> -->
-<!-- 									</buildArguments> -->
-<!-- 									<keep>true</keep> -->
-<!-- 									<push>true</push> -->
-<!-- 									<registry>https://registry.hub.docker.com</registry> -->
-<!-- 									<nameAndTag>spidergawd/continuous-integration</nameAndTag> -->
-<!-- 								</image> -->
-<!-- 							</images> -->
-<!-- 						</configuration> -->
-<!-- 					</execution> -->
-<!-- 				</executions> -->
-<!-- 			</plugin> -->
+			<!-- <plugin> -->
+			<!-- <groupId>net.wouterdanes.docker</groupId> -->
+			<!-- <artifactId>docker-maven-plugin</artifactId> -->
+			<!-- <version>5.0.0</version> -->
+			<!-- <configuration> -->
+			<!-- <serverId>docker-hub</serverId> -->
+			<!-- </configuration> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <id>build</id> -->
+			<!-- <goals> -->
+			<!-- <goal>build-images</goal> -->
+			<!-- </goals> -->
+			<!-- <configuration> -->
+			<!-- <serverId>docker-hub</serverId> -->
+			<!-- <images> -->
+			<!-- <image> -->
+			<!-- <id>continuous-integration</id> -->
+			<!-- <dockerFile>${project.basedir}/src/main/docker/Dockerfile</dockerFile> -->
+			<!-- <artifacts> -->
+			<!-- <artifact> -->
+			<!-- <file>${project.build.directory}/discuss-jar-with-dependencies.jar</file> -->
+			<!-- </artifact> -->
+			<!-- </artifacts> -->
+			<!-- <mavenArtifacts> -->
+			<!-- </mavenArtifacts> -->
+			<!-- <buildArguments> -->
+			<!-- </buildArguments> -->
+			<!-- <keep>true</keep> -->
+			<!-- <push>true</push> -->
+			<!-- <registry>https://registry.hub.docker.com</registry> -->
+			<!-- <nameAndTag>spidergawd/continuous-integration</nameAndTag> -->
+			<!-- </image> -->
+			<!-- </images> -->
+			<!-- </configuration> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
 		</plugins>
 	</build>
 

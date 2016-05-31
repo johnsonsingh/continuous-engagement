@@ -13,14 +13,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclectech.survey.domain.SurveyResult;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.aggregation.TypedAggregation;
 import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.mongodb.DBObject;
 
@@ -31,8 +30,9 @@ public class Aggregations {
 	private SurveyResultServiceImpl surveyResults;
 	private static Logger logger = LoggerFactory.getLogger(Aggregations.class);
 
-	public Aggregations() throws UnknownHostException {
-		mongoPersistence = new MongoPersistenceImpl();
+	@Autowired
+	public Aggregations(MongoDbFactory mongoDbFactory) throws UnknownHostException {
+		mongoPersistence = new MongoPersistenceImpl(mongoDbFactory);
 		surveyResults = new SurveyResultServiceImpl();
 		surveyResults.setMongoPersistenceImpl(mongoPersistence);
 	}

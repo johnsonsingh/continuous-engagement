@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.eclectech.survey.domain.SurveyResult;
 import org.eclectech.survey.domain.SurveyResultCount;
-import org.eclectech.survey.persist.MongoPersistenceImpl;
+import org.eclectech.survey.persist.MongoPersistence;
 import org.eclectech.survey.persist.SurveyResultService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,8 +30,10 @@ public class SurveyController {
 	private SurveyResultService surveyResults;
 
 	@Autowired
-	private MongoPersistenceImpl mongoPersistenceImpl;
+	private MongoPersistence mongoPersistence;
 
+	//TODO should be POST
+	//TODO accept user param
 	@RequestMapping(value="/survey", method = RequestMethod.GET)
 	public List<SurveyResultCount> submitSurvey(@RequestParam("achievement") int achievement,
 			@RequestParam("engagement") int engagement, @RequestParam("development") int development,
@@ -39,7 +41,7 @@ public class SurveyController {
 		Instant now = Instant.now();
 
 		SurveyResult surveyResult = new SurveyResult("user", achievement, engagement, development, culture, now);
-		mongoPersistenceImpl.getMongoTemplate().save(surveyResult);
+		this.mongoPersistence.getMongoTemplate().save(surveyResult);
 		logger.debug("persisted " + surveyResult);
 
 		return getResultCountsForDay(now);
@@ -125,12 +127,12 @@ public class SurveyController {
 	}
 
 	/**
-	 * @param mongoPersistenceImpl
-	 *            the mongoPersistenceImpl to set
+	 * @param mongoPersistence
+	 *            the mongoPersistence to set
 	 */
 	@Autowired
-	protected void setMongoPersistenceImpl(MongoPersistenceImpl mongoPersistenceImpl) {
-		this.mongoPersistenceImpl = mongoPersistenceImpl;
+	protected void setMongoPersistence(MongoPersistence mongoPersistence) {
+		this.mongoPersistence = mongoPersistence;
 	}
 
 }

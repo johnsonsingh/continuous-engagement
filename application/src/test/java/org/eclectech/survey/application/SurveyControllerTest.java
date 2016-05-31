@@ -19,7 +19,7 @@ import java.util.Map;
 import org.eclectech.survey.SurveyResultValues;
 import org.eclectech.survey.domain.SurveyResult;
 import org.eclectech.survey.domain.SurveyResultCount;
-import org.eclectech.survey.persist.MongoPersistenceImpl;
+import org.eclectech.survey.persist.MongoPersistence;
 import org.eclectech.survey.persist.SurveyResultService;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,14 +50,14 @@ public class SurveyControllerTest {
 	private HashMap<Integer, Integer> cul = new HashMap<Integer, Integer>();
 
 	private SurveyResultService surveyResultService = mock(SurveyResultService.class);
-	private MongoPersistenceImpl mongoPersistenceImpl = mock(MongoPersistenceImpl.class);
+	private MongoPersistence mongoPersistence = mock(MongoPersistence.class);
 	private MongoTemplate mongoTemplate = mock(MongoTemplate.class);
 	
 	@Before
 	public void setUp() throws Exception {
 		SurveyController surveyController = new SurveyController();
 		surveyController.setSurveyResultService(surveyResultService);
-		surveyController.setMongoPersistenceImpl(mongoPersistenceImpl);
+		surveyController.setMongoPersistence(mongoPersistence);
 		RestAssuredMockMvc.standaloneSetup(surveyController);
 		setupUpAggregateResults();
 	}
@@ -69,7 +69,7 @@ public class SurveyControllerTest {
 	@Test
 	public void setSurveyResults() {
 		final String user = "user2";
-		when(mongoPersistenceImpl.getMongoTemplate()).thenReturn(mongoTemplate);
+		when(mongoPersistence.getMongoTemplate()).thenReturn(mongoTemplate);
 		when(surveyResultService.getAggregateCountForDay(eq(SurveyCategories.ACHIEVEMENT), any(Instant.class))).thenReturn(ach);
 		when(surveyResultService.getAggregateCountForDay(eq(SurveyCategories.ENGAGEMENT), any(Instant.class))).thenReturn(eng);
 		when(surveyResultService.getAggregateCountForDay(eq(SurveyCategories.CULTURE), any(Instant.class))).thenReturn(cul);
@@ -78,7 +78,7 @@ public class SurveyControllerTest {
 				.param(SurveyCategories.ACHIEVEMENT, achievment).param(SurveyCategories.ENGAGEMENT, engagement).param(SurveyCategories.DEVELOPMENT, development)
 				.param(SurveyCategories.CULTURE, culture).when().get("/survey").as(SurveyResultCount[].class);
 
-		verify(mongoPersistenceImpl,times(1)).getMongoTemplate();
+		verify(mongoPersistence,times(1)).getMongoTemplate();
 		//TODO verify contents of survey result
 		verify(mongoTemplate).save(any(SurveyResult.class));
 		verify(surveyResultService).getAggregateCountForDay(eq(SurveyCategories.ACHIEVEMENT),any(Instant.class));
