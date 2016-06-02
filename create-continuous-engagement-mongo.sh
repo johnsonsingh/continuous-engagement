@@ -1,1 +1,1 @@
-docker run -P --name continuous-engagement-mongo -d mongo
+docker run --name continuous-engagement-mongo --net continuous-engagement-network --net-alias mongohost -P -d  mongo
