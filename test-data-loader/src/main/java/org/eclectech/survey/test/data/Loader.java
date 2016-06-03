@@ -12,7 +12,6 @@ import javax.annotation.PostConstruct;
 import org.eclechtech.markov.Chain;
 import org.eclectech.survey.domain.SurveyResult;
 import org.eclectech.survey.persist.MongoPersistence;
-import org.eclectech.survey.persist.MongoPersistenceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

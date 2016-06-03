@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SurveyController {
 
+	public static final String ANONYMOUS = "anonymous";
+
 	private static Logger logger = LoggerFactory.getLogger(SurveyController.class);
 
 	@Autowired
@@ -33,14 +35,13 @@ public class SurveyController {
 	private MongoPersistence mongoPersistence;
 
 	//TODO should be POST
-	//TODO accept user param
 	@RequestMapping(value="/survey", method = RequestMethod.GET)
-	public List<SurveyResultCount> submitSurvey(@RequestParam("achievement") int achievement,
+	public List<SurveyResultCount> submitSurvey(@RequestParam(name="user",defaultValue=ANONYMOUS) String user, @RequestParam("achievement") int achievement,
 			@RequestParam("engagement") int engagement, @RequestParam("development") int development,
 			@RequestParam("culture") int culture) {
 		Instant now = Instant.now();
 
-		SurveyResult surveyResult = new SurveyResult("user", achievement, engagement, development, culture, now);
+		SurveyResult surveyResult = new SurveyResult(user, achievement, engagement, development, culture, now);
 		this.mongoPersistence.getMongoTemplate().save(surveyResult);
 		logger.debug("persisted " + surveyResult);
 
