@@ -3,42 +3,104 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>Continuous Engagement Survey</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+		<title>Continuous Engagement</title>
 		<link rel="stylesheet" href="./rangeslider.css">
-		<link rel="stylesheet" href="./surveyStyle.css">
+		<!-- Bootstrap core CSS -->
+		<link href="./bootstrap.min.css" rel="stylesheet">
+		<!-- Bootstrap theme -->
+		<link href="./bootstrap-theme.min.css" rel="stylesheet">
+		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+		<link href="./ie10-viewport-bug-workaround.css" rel="stylesheet">
+		<!-- Custom styles for this template -->
+		<link href="./theme.css" rel="stylesheet">
+		<!-- link rel="stylesheet" href="./surveyStyle.css" -->
 	</head>
-	<body>
+	<body role="document">
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">Continuous Engagement</a>
+				</div>
+				<div id="navbar" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li><a href="#about">About</a></li>
+						<li><a href="#contact">Contact</a></li>
+						<li><a href="#reports">Reports</a></li>
+					</ul>
+				</div><!--/.nav-collapse -->
+			</div>
+		</nav>
 		<form id="survey" action="" method="get">
-			<div id="div-achieve">
-				<h2><code>Achievement [contribution, results, satisfaction]</code></h2>
-				<input type="range" min="-2" max="2" step="1" value="0" name="achievement" data-rangeslider>
-				<output></output>
-			</div>
-			<br>
-			<br>
-			<div id="div-engage">
-				<h2><code>Engagement [inclusion, recognition, involvement, commitment]</code></h2>
-				<input type="range" min="-2" max="2" step="1" value="0" name="engagement" data-rangeslider>
-				<output></output>
-			</div>
-			<div id="div-development">
-				<h2><code>Development [learning, growth, opportunity, challenge]</code></h2>
-				<input type="range" min="-2" max="2" step="1" value="0" name="development" data-rangeslider>
-				<output></output>
-			</div>
-			<div id="div-culture">
-				<h2><code>Culture [teamwork, communication, leadership, vision]</code></h2>
-				<input type="range" min="-2" max="2" step="1" value="0" name="culture" data-rangeslider>
-				<output></output>
-			</div>
-			<br>
-			<br>
-			<!-- button cannot have id "submit"  -->
-			<button id="buttonSub" type="submit">Submit</button>
+			<!-- Fixed navbar -->
+			<div class="container theme-showcase" role="main">
+
+				<div class="page-header">
+					<h1>Engagement Survey</h1>
+				</div>
+					<div class="alert alert-success" role="alert">
+						<strong>Thank you for your input.</strong>.
+					</div>
+					<div class="alert alert-danger" role="alert">
+						<strong>Error !</strong> There was an error submitting your input.
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h2>Achievement [contribution, results, satisfaction]</h2>
+						</div>
+						<div class="panel-body">
+							<div id="div-achieve">
+								<input type="range" min="-2" max="2" step="1" value="0" name="achievement" data-rangeslider>
+								<output></output>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h2>Engagement [inclusion, recognition, involvement, commitment]</h2>
+						</div>
+						<div class="panel-body">
+							<div id="div-engage">
+								<input type="range" min="-2" max="2" step="1" value="0" name="engagement" data-rangeslider>
+								<output></output>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h2>Development [learning, growth, opportunity, challenge]</h2>
+						</div>
+						<div class="panel-body">
+							<div id="div-development">
+								<input type="range" min="-2" max="2" step="1" value="0" name="development" data-rangeslider>
+								<output></output>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h2>Culture [teamwork, communication, leadership, vision]</h2>
+						</div>
+						<div class="panel-body">
+							<div id="div-culture">
+								<input type="range" min="-2" max="2" step="1" value="0" name="culture" data-rangeslider>
+								<output></output>
+							</div>
+						</div>
+					</div>
+					<!-- button cannot have id "submit"  -->
+					<button id="buttonSub" type="submit" class="btn btn-primary">Submit</button>
+			</div> <!-- /container -->
 		</form>
-		<div id="resultDiv" style="margin-bottom: 50px;">
-		</div>
+ 		<div id="resultDiv" class="container theme-showcase" role="main"></div>
+ 		<!-- div id="resultDiv" style="margin-bottom: 50px;" class="container theme-showcase" role="main"></div-->
 		<script src="./jquery-1.11.3.js"></script>
 		<script src="./rangeslider.js"></script>
 		<script src="./d3.min.js"></script>
@@ -152,6 +214,7 @@
 					.attr("class", "y axis")
 				//	.attr("transform", "translate(" + x(0) + ",0)")
 					.attr("transform", "translate(0,0)")
+					.style("font" ,"10px sans-serif")
 					.call(yAxis);
 
 				svg.append("g")
@@ -226,6 +289,7 @@
 
 				svg.append("g")
 					.attr("class", "y axis")
+					.style("font" ,"10px sans-serif")
 					.call(yAxis)
 
 				var vakken = svg.selectAll(".question")
@@ -294,13 +358,12 @@
 				d3.selectAll(".axis path")
 					.style("fill", "none")
 					.style("stroke", "#000")
-					.style("shape-rendering", "crispEdges")
+					.style("shape-rendering", "crispEdges");
 
 				d3.selectAll(".axis line")
 					.style("fill", "none")
 					.style("stroke", "#000")
-					.style("shape-rendering", "crispEdges")
-
+					.style("shape-rendering", "crispEdges");
 				var movesize = width/2 - startp.node().getBBox().width/2;
 				d3.selectAll(".legendbox").attr("transform", "translate(" + movesize  + ",0)");
 			}

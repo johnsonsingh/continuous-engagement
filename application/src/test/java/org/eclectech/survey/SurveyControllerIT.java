@@ -32,10 +32,9 @@ import org.springframework.web.client.RestTemplate;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
-@IntegrationTest({ "server.port=0", "spring.data.mongodb.uri=mongodb://127.0.0.1:32775/ContinuousIntegration" })
+@IntegrationTest({ "server.port=0"})
 @ComponentScan(basePackages = { "org.eclectech.survey" })
 @EnableAutoConfiguration
-//TODO use embedded mongo for tests ?
 public class SurveyControllerIT {
 	private static final String USER1 = "user1";
 
