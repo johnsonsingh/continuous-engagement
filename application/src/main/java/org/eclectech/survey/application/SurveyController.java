@@ -97,12 +97,12 @@ public class SurveyController {
 	}
 
 	
-	private List<SurveyResultCount> getResultCountsForDay(Instant now) {
+	private List<SurveyResultCount> getResultCountsForDay(Instant instant) {
 		List<SurveyResultCount> surveyResultCounts = new ArrayList<SurveyResultCount>();
-		surveyResultCounts.add(SurveyResultCountUtil.create(SurveyCategories.ACHIEVEMENT,now,this.surveyResults));
-		surveyResultCounts.add(SurveyResultCountUtil.create(SurveyCategories.ENGAGEMENT,now,this.surveyResults));
-		surveyResultCounts.add(SurveyResultCountUtil.create(SurveyCategories.DEVELOPMENT,now,this.surveyResults));
-		surveyResultCounts.add(SurveyResultCountUtil.create(SurveyCategories.CULTURE,now,this.surveyResults));
+		surveyResultCounts.add(SurveyResultCountUtil.create(SurveyCategories.ACHIEVEMENT,instant,this.surveyResults));
+		surveyResultCounts.add(SurveyResultCountUtil.create(SurveyCategories.ENGAGEMENT,instant,this.surveyResults));
+		surveyResultCounts.add(SurveyResultCountUtil.create(SurveyCategories.DEVELOPMENT,instant,this.surveyResults));
+		surveyResultCounts.add(SurveyResultCountUtil.create(SurveyCategories.CULTURE,instant,this.surveyResults));
 		return surveyResultCounts;
 	}
 
