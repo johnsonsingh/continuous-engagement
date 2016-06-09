@@ -45,12 +45,6 @@
 				<div class="page-header">
 					<h1>Engagement Survey</h1>
 				</div>
-					<div class="alert alert-success" role="alert">
-						<strong>Thank you for your input.</strong>.
-					</div>
-					<div class="alert alert-danger" role="alert">
-						<strong>Error !</strong> There was an error submitting your input.
-					</div>
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h2>Achievement [contribution, results, satisfaction]</h2>
@@ -157,7 +151,12 @@
 				translatedArray.push(data.sum);
 				return translatedArray;
 			}
-			
+
+			function displaySuccess(){
+				$('#resultDiv').append('<div id="alert"><strong>Thank you for your input.</strong></div>');
+		      $('#alert').addClass('alert alert-success').data('role','alert');
+         }			
+
 			function displayIndividualResult(dataArray){
 				var margin = {top: 20, right: 20, bottom: 40, left:80},
 					width = 800 - margin.left - margin.right,
@@ -390,6 +389,7 @@
 					dataArray.push(new Array("engagement",engage));
 					dataArray.push(new Array("development",development));
 					dataArray.push(new Array("culture",culture));
+					displaySuccess();
 					displayIndividualResult(dataArray);
 					displayResult(data);
 				});
