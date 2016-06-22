@@ -1,1 +1,1 @@
-docker -P start continuous-engagement-mongo
+docker start continuous-engagement-mongo
