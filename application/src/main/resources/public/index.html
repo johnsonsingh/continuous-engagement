@@ -223,7 +223,7 @@
 					.attr("y2", height);
 			}
 
-			function displayResult(data){
+			function displayResult(data, resultDiv){
 				var margin = {top: 50, right: 20, bottom: 10, left: 80},
 					width = 800 - margin.left - margin.right,
 					height = 400 - margin.top - margin.bottom;
@@ -245,8 +245,7 @@
 					.scale(y)
 					.orient("left")
 
-				var svg = d3.select("#resultDiv").append("svg")
-					.attr("width", width + margin.left + margin.right)
+				var svg = resultDiv.append("svg").attr("width", width + margin.left + margin.right)
 					.attr("height", height + margin.top + margin.bottom)
 					.attr("id", "d3-plot")
 					.append("g")
@@ -375,6 +374,7 @@
 				var engage =  $(selector,'#div-engage').val();
 				var culture =  $(selector,'#div-culture').val();
 				var development =  $(selector,'#div-development').val();
+				var resultDiv = d3.select("#resultDiv");
 				console.log("achieve : "+ achieve + ", engage : "+engage+", development : "+development+ ", culture  : "+culture);
 				//TODO add error handling
 				$.ajax({
@@ -390,7 +390,7 @@
 					dataArray.push(new Array("culture",culture));
 					displaySuccess();
 					displayIndividualResult(dataArray);
-					displayResult(data);
+					displayResult(data, resultDiv);
 				});
 				return false;
 			});
