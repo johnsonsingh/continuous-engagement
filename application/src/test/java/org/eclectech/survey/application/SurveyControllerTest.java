@@ -176,6 +176,24 @@ public class SurveyControllerTest {
 		verify(surveyResultService).getAggregateCountForDay(SurveyCategories.DEVELOPMENT, instant);
 		verify(surveyResultService).getAggregateCountForDay(SurveyCategories.ENGAGEMENT, instant);
 	}
+	
+//	@Test 
+//	public void getResultCounts() {
+//		Instant instant = Instant.now();
+//		when(surveyResultService.getAggregateCountForDay(SurveyCategories.ACHIEVEMENT,instant)).thenReturn(ach);
+//		when(surveyResultService.getAggregateCountForDay(SurveyCategories.CULTURE,instant)).thenReturn(cul);
+//		when(surveyResultService.getAggregateCountForDay(SurveyCategories.DEVELOPMENT,instant)).thenReturn(dev);
+//		when(surveyResultService.getAggregateCountForDay(SurveyCategories.ENGAGEMENT,instant)).thenReturn(eng);
+//		
+//		SurveyResultCount[] results = given().header("accept", "application/json").
+//				when().get("/resultCounts/").as(SurveyResultCount[].class);
+//		checkExpectedSurveyResultCounts(instant, results);
+//		
+//		verify(surveyResultService).getAggregateCountForDay(SurveyCategories.ACHIEVEMENT, instant);
+//		verify(surveyResultService).getAggregateCountForDay(SurveyCategories.CULTURE, instant);
+//		verify(surveyResultService).getAggregateCountForDay(SurveyCategories.DEVELOPMENT, instant);
+//		verify(surveyResultService).getAggregateCountForDay(SurveyCategories.ENGAGEMENT, instant);
+//	}
 	/*
 
 	@RequestMapping(value="/resultCounts/date/{dateAsString}", method = RequestMethod.GET)

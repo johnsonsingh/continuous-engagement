@@ -90,12 +90,18 @@ public class SurveyController {
 		return this.surveyResults.getSurveyResults(instant);
 	}
 
+	@RequestMapping(value="/resultCounts", method = RequestMethod.GET)
+	public List<SurveyResultCount> getResultCounts() {
+		logger.debug("getResultCounts");
+		Instant now = Instant.now();
+		return getResultCountsForDay(now);
+	}
+	
 	@RequestMapping(value="/resultCounts/date/{dateAsString}", method = RequestMethod.GET)
 	public List<SurveyResultCount> getResultCounts(@PathVariable String dateAsString) {
 		logger.debug("getResultCounts for date {}", dateAsString);
 		return getResultCountsForDay(parseDateStringAtStartOfDay(dateAsString));
 	}
-
 	
 	private List<SurveyResultCount> getResultCountsForDay(Instant instant) {
 		List<SurveyResultCount> surveyResultCounts = new ArrayList<SurveyResultCount>();

@@ -5,7 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-		<title>Continuous Engagement Reports</title>
+		<title>Counts for Today</title>
 		<link rel="stylesheet" href="./rangeslider.css">
 		<!-- Bootstrap core CSS -->
 		<link href="./bootstrap.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
 		<link href="./theme.css" rel="stylesheet">
 		<!-- link rel="stylesheet" href="./surveyStyle.css" -->
 	</head>
-	<body role="document">
+	<body role="document" onload="loadPage()">
 		<nav class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container">
 				<div class="navbar-header">
@@ -38,20 +38,32 @@
 				</div><!--/.nav-collapse -->
 			</div>
 		</nav>
-		<div class="container theme-showcase" role="main">
- 			<div id="reportsDiv" class="page-header">
-				<h1>Reports</h1>
-				<div class="well">
-					<p>Few reports are implemented so there is also a link to the Swagger API document.</p>
+		<form id="today" action="" method="get">
+			<!-- Fixed navbar -->
+			<div class="container theme-showcase" role="main">
+
+				<div class="page-header">
+					<h1>Today's Results</h1>
 				</div>
-				<ul>
-					<!--/resultCounts/date/{dateAsString} -->
-					<li><a href="todayCounts.html">Today's Results</a></li>
-					<li><a href="swagger-ui.html">Swagger</a></li>
-				</ul>
-			</div>
-		</div>
+		</form>
+ 		<div id="resultDiv" class="container theme-showcase" role="main"></div>
+		<script src="./jquery-1.11.3.js"></script>
+		<script src="./d3.min.js"></script>
+		<script src="./displayResultCounts.js"></script>
+
 		<script>
+		<!-- call when page loads -->
+		function loadPage() {
+			var resultDiv = d3.select("#resultDiv");
+			//TODO add error handling
+			$.ajax({
+				url : "http://localhost:8080/resultCounts",
+				type: "GET"}
+			).done(function(data) {
+				displayResultCounts(data, resultDiv);
+			});
+			return false;
+		};
 		</script>
 	</body>
 </html>
