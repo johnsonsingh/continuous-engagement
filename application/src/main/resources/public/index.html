@@ -135,23 +135,6 @@
 				return value;
 			}
 
-			/**
-           translates a score for a survey result
-           array expected by the d3 processing which
-           would be the count of results for a given score value
-			*/
-			function translateSurveyResultForD3(data) {
-				var translatedArray = [];
-				translatedArray.push(data.name);
-				translatedArray.push(data.veryNegative);
-				translatedArray.push(data.somewhatNegative);
-				translatedArray.push(data.neutral);
-				translatedArray.push(data.somewhatPositive);
-				translatedArray.push(data.veryPositive);
-				translatedArray.push(data.sum);
-				return translatedArray;
-			}
-
 			function displaySuccess(){
 				$('#resultDiv').append('<div id="alert"><strong>Thank you for your input.</strong></div>');
 		      $('#alert').addClass('alert alert-success').data('role','alert');
