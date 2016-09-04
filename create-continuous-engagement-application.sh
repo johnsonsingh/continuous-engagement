@@ -1,0 +1,1 @@
+docker run -p 127.0.0.1:8080:8080 --net continuous-engagement-network --name continuous-engagement -d continuous-engagement-application --spring.profiles.active=live --spring.data.mongodb.uri=mongodb://mongohost:27017/ContinuousIntegration

@@ -8,7 +8,7 @@ import org.eclectech.survey.domain.SurveyResult;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface SurveyResults {
+public interface SurveyResultService {
 
 	public List<SurveyResult> getSurveyResults(String user);
 

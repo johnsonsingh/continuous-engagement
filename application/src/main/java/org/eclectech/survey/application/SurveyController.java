@@ -10,8 +10,8 @@ import java.util.List;
 
 import org.eclectech.survey.domain.SurveyResult;
 import org.eclectech.survey.domain.SurveyResultCount;
-import org.eclectech.survey.persist.MongoPersistenceImpl;
-import org.eclectech.survey.persist.SurveyResults;
+import org.eclectech.survey.persist.MongoPersistence;
+import org.eclectech.survey.persist.SurveyResultService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,34 +24,28 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SurveyController {
 
+	public static final String ANONYMOUS = "anonymous";
+
 	private static Logger logger = LoggerFactory.getLogger(SurveyController.class);
 
 	@Autowired
-	private SurveyResults surveyResults;
+	private SurveyResultService surveyResults;
 
 	@Autowired
-	private MongoPersistenceImpl mongoPersistenceImpl;
-
+	private MongoPersistence mongoPersistence;
+	
+	//TODO should be POST
 	@RequestMapping(value="/survey", method = RequestMethod.GET)
-	public List<SurveyResultCount> submitSurvey(@RequestParam("achievement") int achievement,
+	public List<SurveyResultCount> submitSurvey(@RequestParam(name="user",defaultValue=ANONYMOUS) String user, @RequestParam("achievement") int achievement,
 			@RequestParam("engagement") int engagement, @RequestParam("development") int development,
 			@RequestParam("culture") int culture) {
 		Instant now = Instant.now();
 
-		SurveyResult surveyResult = new SurveyResult("user", achievement, engagement, development, culture, now);
-		mongoPersistenceImpl.getMongoOperations().save(surveyResult);
+		SurveyResult surveyResult = new SurveyResult(user, achievement, engagement, development, culture, now);
+		this.mongoPersistence.getMongoTemplate().save(surveyResult);
 		logger.debug("persisted " + surveyResult);
 
 		return getResultCountsForDay(now);
-	}
-
-	private List<SurveyResultCount> getResultCountsForDay(Instant now) {
-		List<SurveyResultCount> surveyResultCounts = new ArrayList<SurveyResultCount>();
-		surveyResultCounts.add(SurveyResultCountUtil.create("achievement",now,this.surveyResults));
-		surveyResultCounts.add(SurveyResultCountUtil.create("engagement",now,this.surveyResults));
-		surveyResultCounts.add(SurveyResultCountUtil.create("development",now,this.surveyResults));
-		surveyResultCounts.add(SurveyResultCountUtil.create("culture",now,this.surveyResults));
-		return surveyResultCounts;
 	}
 
 	/**
@@ -63,7 +57,6 @@ public class SurveyController {
 	public List<SurveyResult> getResultsForUser(@PathVariable("user") String user) {
 		logger.debug("for user " + user);
 		return this.surveyResults.getSurveyResults(user);
-
 	}
 
 	/**
@@ -97,13 +90,28 @@ public class SurveyController {
 		return this.surveyResults.getSurveyResults(instant);
 	}
 
+	@RequestMapping(value="/resultCounts", method = RequestMethod.GET)
+	public List<SurveyResultCount> getResultCounts() {
+		logger.debug("getResultCounts");
+		Instant now = Instant.now();
+		return getResultCountsForDay(now);
+	}
+	
 	@RequestMapping(value="/resultCounts/date/{dateAsString}", method = RequestMethod.GET)
 	public List<SurveyResultCount> getResultCounts(@PathVariable String dateAsString) {
 		logger.debug("getResultCounts for date {}", dateAsString);
 		return getResultCountsForDay(parseDateStringAtStartOfDay(dateAsString));
 	}
-
 	
+	private List<SurveyResultCount> getResultCountsForDay(Instant instant) {
+		List<SurveyResultCount> surveyResultCounts = new ArrayList<SurveyResultCount>();
+		surveyResultCounts.add(SurveyResultCountUtil.create(SurveyCategories.ACHIEVEMENT,instant,this.surveyResults));
+		surveyResultCounts.add(SurveyResultCountUtil.create(SurveyCategories.ENGAGEMENT,instant,this.surveyResults));
+		surveyResultCounts.add(SurveyResultCountUtil.create(SurveyCategories.DEVELOPMENT,instant,this.surveyResults));
+		surveyResultCounts.add(SurveyResultCountUtil.create(SurveyCategories.CULTURE,instant,this.surveyResults));
+		return surveyResultCounts;
+	}
+
 	/**
 	 * returns <code>Instant</code> for received date string
 	 * 
@@ -111,7 +119,7 @@ public class SurveyController {
 	 *            format YYYYY-MM-DD
 	 * @return <code>Instant</code>
 	 */
-	private Instant parseDateStringAtStartOfDay(String dateAsString) {
+	protected static Instant parseDateStringAtStartOfDay(String dateAsString) {
 		LocalDateTime dateTime = LocalDate.parse(dateAsString, DateTimeFormatter.ISO_LOCAL_DATE).atStartOfDay();
 		return dateTime.toInstant(ZoneOffset.UTC);
 	}
@@ -121,17 +129,17 @@ public class SurveyController {
 	 *            the surveyResults to set
 	 */
 	@Autowired
-	public void setSurveyResults(SurveyResults surveyResults) {
+	protected void setSurveyResultService(SurveyResultService surveyResults) {
 		this.surveyResults = surveyResults;
 	}
 
 	/**
-	 * @param mongoPersistenceImpl
-	 *            the mongoPersistenceImpl to set
+	 * @param mongoPersistence
+	 *            the mongoPersistence to set
 	 */
 	@Autowired
-	private void setMongoPersistenceImpl(MongoPersistenceImpl mongoPersistenceImpl) {
-		this.mongoPersistenceImpl = mongoPersistenceImpl;
+	protected void setMongoPersistence(MongoPersistence mongoPersistence) {
+		this.mongoPersistence = mongoPersistence;
 	}
 
 }

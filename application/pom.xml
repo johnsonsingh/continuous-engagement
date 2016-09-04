@@ -1,13 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.eclectech</groupId>
-        <artifactId>continuous-engagement-parent</artifactId>
-        <version>0.1.0</version>
-    </parent>
+	<parent>
+		<groupId>org.eclectech</groupId>
+		<artifactId>continuous-engagement-parent</artifactId>
+		<version>0.1.0</version>
+	</parent>
+
+	<repositories>
+		<repository>
+			<id>sonatype-snapshots</id>
+			<url>https://oss.sonatype.org/content/ositories/snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>sonatype-snapshots</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
 
 	<dependencies>
 		<dependency>
@@ -34,70 +54,156 @@
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
-  			<artifactId>jackson-datatype-jsr310</artifactId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
 		</dependency>
 		<dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.4.0</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>2.4.0</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.4.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.4.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.eclectech</groupId>
 			<artifactId>persistence</artifactId>
 			<version>0.1.0</version>
 		</dependency>
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jayway.restassured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>2.9.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.jayway.restassured</groupId>
+			<artifactId>spring-mock-mvc</artifactId>
+			<version>2.9.0</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- embedded mongo for integration tests -->
+		<dependency>
+			<groupId>de.flapdoodle.embed</groupId>
+			<artifactId>de.flapdoodle.embed.mongo</artifactId>
+			<version>1.50.5</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
+	<properties>
+		<java.version>1.8</java.version>
+		<docker.image.prefix>spidergawd</docker.image.prefix>
+	</properties>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>default-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<configuration>
+							<includes>
+								<include>**/*Tests.java</include>
+								<include>**/*Test.java</include>
+							</includes>
+							<excludes>
+								<exclude>**/Abstract*.java</exclude>
+							</excludes>
+						</configuration>
+					</execution>
+				</executions>
+				<configuration>
+					<includes>
+						<include>**/*Tests.java</include>
+						<include>**/*Test.java</include>
+					</includes>
+					<excludes>
+						<exclude>**/Abstract*.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<!-- <plugin> -->
+			<!-- <groupId>io.fabric8</groupId> -->
+			<!-- <artifactId>docker-maven-plugin</artifactId> -->
+			<!-- <version>0.14.2</version> -->
+			<!-- </plugin> -->
+			<!-- <plugin> -->
+			<!-- <groupId>com.spotify</groupId> -->
+			<!-- <artifactId>docker-maven-plugin</artifactId> -->
+			<!-- <version>0.4.5</version> -->
+			<!-- <configuration> -->
+			<!-- <serverId>docker-hub</serverId> -->
+			<!-- <dockerHost>https://hub.docker.com</dockerHost> -->
+			<!-- <registryUrl>https://registry.hub.docker.com</registryUrl> -->
+			<!-- <imageName>${docker.image.prefix}/${project.artifactId}</imageName> -->
+			<!-- <dockerDirectory>src/main/docker</dockerDirectory> -->
+			<!-- <resources> -->
+			<!-- <resource> -->
+			<!-- <targetPath>/</targetPath> -->
+			<!-- <directory>${project.build.directory}</directory> -->
+			<!-- <include>${project.build.finalName}.jar</include> -->
+			<!-- </resource> -->
+			<!-- </resources> -->
+			<!-- </configuration> -->
+			<!-- </plugin> -->
+			<!-- <plugin> -->
+			<!-- <groupId>net.wouterdanes.docker</groupId> -->
+			<!-- <artifactId>docker-maven-plugin</artifactId> -->
+			<!-- <version>5.0.0</version> -->
+			<!-- <configuration> -->
+			<!-- <serverId>docker-hub</serverId> -->
+			<!-- </configuration> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <id>build</id> -->
+			<!-- <goals> -->
+			<!-- <goal>build-images</goal> -->
+			<!-- </goals> -->
+			<!-- <configuration> -->
+			<!-- <serverId>docker-hub</serverId> -->
+			<!-- <images> -->
+			<!-- <image> -->
+			<!-- <id>continuous-integration</id> -->
+			<!-- <dockerFile>${project.basedir}/src/main/docker/Dockerfile</dockerFile> -->
+			<!-- <artifacts> -->
+			<!-- <artifact> -->
+			<!-- <file>${project.build.directory}/discuss-jar-with-dependencies.jar</file> -->
+			<!-- </artifact> -->
+			<!-- </artifacts> -->
+			<!-- <mavenArtifacts> -->
+			<!-- </mavenArtifacts> -->
+			<!-- <buildArguments> -->
+			<!-- </buildArguments> -->
+			<!-- <keep>true</keep> -->
+			<!-- <push>true</push> -->
+			<!-- <registry>https://registry.hub.docker.com</registry> -->
+			<!-- <nameAndTag>spidergawd/continuous-integration</nameAndTag> -->
+			<!-- </image> -->
+			<!-- </images> -->
+			<!-- </configuration> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
+		</plugins>
+	</build>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-       <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>default-test</id>
-            <phase>test</phase>
-            <goals>
-              <goal>test</goal>
-            </goals>
-            <configuration>
-              <includes>
-                <include>**/*Tests.java</include>
-                <include>**/*Test.java</include>
-              </includes>
-              <excludes>
-                <exclude>**/Abstract*.java</exclude>
-              </excludes>
-            </configuration>
-          </execution>
-        </executions>
-        <configuration>
-          <includes>
-            <include>**/*Tests.java</include>
-            <include>**/*Test.java</include>
-          </includes>
-          <excludes>
-            <exclude>**/Abstract*.java</exclude>
-          </excludes>
-        </configuration>
-      </plugin>
-        </plugins>
-    </build>
-
-    <artifactId>continuous-engagement</artifactId>
+	<artifactId>continuous-engagement</artifactId>
 </project>

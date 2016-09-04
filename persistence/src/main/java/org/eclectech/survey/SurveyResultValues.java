@@ -1,6 +1,6 @@
 package org.eclectech.survey;
 
-public interface SurveyResultCategories {
+public interface SurveyResultValues {
 	public static final Integer VERY_NEGATIVE = -2;
 	public static final Integer NEGATIVE = -1;
 	public static final Integer NEUTRAL = 0;

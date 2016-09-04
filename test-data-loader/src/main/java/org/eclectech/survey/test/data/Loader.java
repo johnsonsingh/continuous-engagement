@@ -12,9 +12,10 @@ import javax.annotation.PostConstruct;
 import org.eclechtech.markov.Chain;
 import org.eclectech.survey.domain.SurveyResult;
 import org.eclectech.survey.persist.MongoPersistence;
-import org.eclectech.survey.persist.MongoPersistenceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -25,7 +26,6 @@ public class Loader {
 	private static Logger logger = LoggerFactory.getLogger(Loader.class);
 
 	private static final int MAX_USERS = 100;
-	private MongoPersistence mongoPersistence;
 	private final List<String> users;
 	private int baseAchievement = -1;
 	private int baseEngagement = -2;
@@ -38,8 +38,11 @@ public class Loader {
 			{ 25, 20, 15, 35, 05 }, { 35, 20, 05, 15, 25 }, { 05, 35, 25, 20, 15 } };
 	private Chain chain;
 
-	public Loader() throws UnknownHostException {
-		mongoPersistence = new MongoPersistenceImpl();
+	@Autowired
+	private MongoPersistence mongoPersistence;
+
+	@Autowired
+	public Loader(MongoDbFactory mongoDbFactory) throws UnknownHostException {
 		this.users = buildUsers();
 		this.chain = new Chain(range, probabilities);
 	}
@@ -56,7 +59,7 @@ public class Loader {
 	@PostConstruct
 	public void populateSurveyResultsForYear() {
 		// drop it
-		this.mongoPersistence.getMongoOperations().dropCollection(SurveyResult.class);
+		this.mongoPersistence.getMongoTemplate().dropCollection(SurveyResult.class);
 		Instant now = Instant.now().truncatedTo(ChronoUnit.DAYS);
 		Instant instant = now.minus(Duration.ofDays(365));
 		// we'll use the same value for all survey users for now
@@ -95,7 +98,7 @@ public class Loader {
 			update.set("development", surveyResult.getDevelopment());
 			update.set("engagement", surveyResult.getEngagement());
 			update.set("instant", instant);
-			mongoPersistence.getMongoOperations().upsert(query,update,SurveyResult.class);
+			mongoPersistence.getMongoTemplate().upsert(query,update,SurveyResult.class);
 			//TODO test that no duplicates for users and day
 			//transition for next iteration
 			surveyResult.setAchievement(transition(surveyResult.getAchievement()));

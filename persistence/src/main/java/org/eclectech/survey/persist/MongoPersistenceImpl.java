@@ -4,9 +4,10 @@ import java.net.UnknownHostException;
 import java.util.Arrays;
 
 import org.eclectech.survey.domain.SurveyResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.data.mongodb.core.convert.CustomConversions;
 import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
 import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
@@ -14,25 +15,24 @@ import org.springframework.data.mongodb.core.index.Index;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.stereotype.Service;
 
-import com.mongodb.MongoClient;
-
 @Service
 public class MongoPersistenceImpl implements MongoPersistence {
 
-	private SimpleMongoDbFactory mongoDbFactory;
-	private final MongoTemplate mongoOperations;
+	private final MongoDbFactory mongoDbFactory;
+	private final MongoTemplate mongoTemplate;
 
-	public MongoPersistenceImpl() throws UnknownHostException {
-		mongoDbFactory = new SimpleMongoDbFactory(new MongoClient(), "ContinuousEngagement");
+	@Autowired
+	public MongoPersistenceImpl(MongoDbFactory mongoDbFactory) throws UnknownHostException {
+		this.mongoDbFactory = mongoDbFactory;
 		MongoMappingContext context = new MongoMappingContext();
-		MappingMongoConverter mongoConverter = new MappingMongoConverter(new DefaultDbRefResolver(mongoDbFactory),
+		MappingMongoConverter mongoConverter = new MappingMongoConverter(new DefaultDbRefResolver(this.mongoDbFactory),
 				context);
 		mongoConverter.setCustomConversions(getCustomConversions());
 		mongoConverter.afterPropertiesSet();
 
-		this.mongoOperations = new MongoTemplate(mongoDbFactory, mongoConverter);
-		this.mongoOperations.indexOps(SurveyResult.class).ensureIndex(new Index().on("user", Direction.ASC));
-		this.mongoOperations.indexOps(SurveyResult.class).ensureIndex(new Index().on("instant", Direction.ASC));
+		this.mongoTemplate = new MongoTemplate(this.mongoDbFactory, mongoConverter);
+		this.mongoTemplate.indexOps(SurveyResult.class).ensureIndex(new Index().on("user", Direction.ASC));
+		this.mongoTemplate.indexOps(SurveyResult.class).ensureIndex(new Index().on("instant", Direction.ASC));
 	}
 
 	/**
@@ -46,8 +46,8 @@ public class MongoPersistenceImpl implements MongoPersistence {
 	 * @return the mongoOperations
 	 */
 	@Override
-	public MongoTemplate getMongoOperations() {
-		return mongoOperations;
+	public MongoTemplate getMongoTemplate() {
+		return mongoTemplate;
 	}
 
 }

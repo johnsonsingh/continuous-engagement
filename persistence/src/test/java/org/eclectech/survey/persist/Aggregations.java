@@ -13,27 +13,27 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclectech.survey.domain.SurveyResult;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.aggregation.TypedAggregation;
 import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.mongodb.DBObject;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
 public class Aggregations {
 
 	private MongoPersistenceImpl mongoPersistence;
-	private SurveyResultsImpl surveyResults;
+	private SurveyResultServiceImpl surveyResults;
 	private static Logger logger = LoggerFactory.getLogger(Aggregations.class);
 
-	public Aggregations() throws UnknownHostException {
-		mongoPersistence = new MongoPersistenceImpl();
-		surveyResults = new SurveyResultsImpl();
+	@Autowired
+	public Aggregations(MongoDbFactory mongoDbFactory) throws UnknownHostException {
+		mongoPersistence = new MongoPersistenceImpl(mongoDbFactory);
+		surveyResults = new SurveyResultServiceImpl();
 		surveyResults.setMongoPersistenceImpl(mongoPersistence);
 	}
 
@@ -60,7 +60,7 @@ public class Aggregations {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void getAggregateSurveyResults() {
 		logger.info("***************** getAggregateSurveyResults **************************");
 		Instant instant = LocalDateTime.of(2015, 12, 11, 0, 12).toInstant(ZoneOffset.UTC);
@@ -91,7 +91,7 @@ public class Aggregations {
 		}
 		}*/
 	
-	@Test
+	//@Test
 	public void testAggregateForCountForDay() {
 		logger.info("***************** testAggregateForCountForDay **************************");
 		Instant instant = LocalDateTime.of(2015, 12, 11, 0, 12).toInstant(ZoneOffset.UTC);
@@ -122,7 +122,7 @@ public class Aggregations {
 		TypedAggregation<SurveyResult> aggregation = newAggregation(SurveyResult.class,
 				match(Criteria.where("instant").gt(instant).lt(instant.plus(Duration.ofDays(1)))),
 				group(attribute).count().as("counts"));
-		AggregationResults<DBObject> result = this.mongoPersistence.getMongoOperations().aggregate(aggregation,
+		AggregationResults<DBObject> result = this.mongoPersistence.getMongoTemplate().aggregate(aggregation,
 				DBObject.class);
 		List<DBObject>dbObjects = result.getMappedResults();
 		for (DBObject dbObject : dbObjects) {

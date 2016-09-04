@@ -4,5 +4,5 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 
 public interface MongoPersistence {
 
-	public MongoTemplate getMongoOperations();
+	public MongoTemplate getMongoTemplate();
 }
