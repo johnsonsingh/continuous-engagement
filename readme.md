@@ -1,23 +1,35 @@
 # Continuous Engagement
 
 ## Introduction
-This application provides a simple engagement survey, supporting persistence of the results.
+This application provides a simple engagement survey, supporting persistence of the results. It may be used and distributed under the terms of the GNU GPL, see "LICENSE".
 
-## Implementation
+## Implementation Overview
 This is a Web Application using:
+- BootStrap
 - JQuery
 - D3
-- BootStrap
+- Java with Spring Boot
+- MongoDB
 
-The Server is implemented in Java using Spring Boot.
-Results are persisted using MongoDB.
-
-Travis is used to perform the Continuous Integration and to build and push the Docker image. See https://travis-ci.org/spidergawd/continuous-engagement .
+The project is built with Maven.
+As you have discovered the project repository is hosted on GitHub.
+Travis is used to perform the Continuous Integration build and to push the Docker image to Docker Hub. See https://travis-ci.org/spidergawd/continuous-engagement .
 
 The Docker image is available at https://hub.docker.com/r/spidergawd/continuous-engagement/ .
 
+## Docker examples
+
+The ```build.sh``` script performs a mvn build and builds the Docker image for the application.
+
+The ```create-*``` scripts create the containers for the web application, the mongo database and the network. The application is exposed on ```localhost``` port 8080.
+
+The ```start-*``` scripts start the named containers.
+
+The ```mongo-client.sh``` script provides the mongo command line client.
+
 ## Developer Notes
-The application is a self contained Spring Boot Application. If you want to run this without docker and you have ```mongod``` running you can run as in the following script:
+The application is a self contained Spring Boot Application. If you want to run it without docker, run ```mongod``` and then run the application as in the script:
+
 ~~~~
 ./buildAndRun.sh
 ~~~~
@@ -37,7 +49,7 @@ For development purposes only, a simple example for configuring Apache to serve 
 - update "/etc/apache2/sites-enabled/000-default.conf" to serve content from the development directory location, for example:
 ~~~
 <VirtualHost *:80>
-	DocumentRoot /home/david/work/continuousEngagement/application/src/main/resources/public
+	DocumentRoot /home/user/work/continuousEngagement/application/src/main/resources/public
 	ErrorLog ${APACHE_LOG_DIR}/error.log
 	CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
