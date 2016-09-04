@@ -33,7 +33,7 @@ public class SurveyController {
 
 	@Autowired
 	private MongoPersistence mongoPersistence;
-
+	
 	//TODO should be POST
 	@RequestMapping(value="/survey", method = RequestMethod.GET)
 	public List<SurveyResultCount> submitSurvey(@RequestParam(name="user",defaultValue=ANONYMOUS) String user, @RequestParam("achievement") int achievement,
