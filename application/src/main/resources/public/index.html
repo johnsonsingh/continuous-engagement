@@ -16,9 +16,11 @@
 		<!-- Custom styles for this template -->
 		<link href="./theme.css" rel="stylesheet">
 		<!-- link rel="stylesheet" href="./surveyStyle.css" -->
+		<link href="./newnav.css" rel="stylesheet">
+
 	</head>
 	<body role="document">
-		<nav class="navbar navbar-inverse navbar-fixed-top">
+		<!-- <nav class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -35,15 +37,28 @@
 						<li><a href="#contact">Contact</a></li>
 						<li><a href="reports.html">Reports</a></li>
 					</ul>
-				</div><!--/.nav-collapse -->
+				</div> .nav-collapse
 			</div>
+		</nav> -->
+
+		<div class="newnav">
+		<nav style="">
+			<ul>
+				<li><a href="https://www.ig.com/uk"><img class="logo" src="https://a.c-dn.net/c/etc/designs/onedomain/1505319256000/images/og_image.jpg" ></li></a>
+				<li><a class="navButton" href="index.html">Home</a></li>
+				<li><a class="navButton" href="#about">About</a></li>
+				<li><a class="navButton" href="#contact">Contact</a></li>
+				<li><a class="navButton" href="reports.html">Reports</a></li>
+			</ul>
 		</nav>
+		</div>
+
 		<form id="survey" action="" method="get">
 			<!-- Fixed navbar -->
 			<div class="container theme-showcase" role="main">
 
-				<div class="page-header">
-					<h1>Engagement Survey</h1>
+				<div class="page-header headerRed">
+					<h1>Engagement Survey Project 002</h1>
 				</div>
 					<div class="panel panel-default">
 						<div class="panel-heading">
@@ -135,7 +150,7 @@
 			function displaySuccess(){
 				$('#resultDiv').append('<div id="alert"><strong>Thank you for your input.</strong></div>');
 		      $('#alert').addClass('alert alert-success').data('role','alert');
-         }			
+         }
 
 			function displayIndividualResult(dataArray){
 				var margin = {top: 20, right: 20, bottom: 40, left:80},
@@ -203,7 +218,7 @@
 					.attr("x2", x(0))
 					.attr("y2", height);
 			}
-			
+
 			$document.on('input', 'input[type="range"], ' + selector, function(e) {
 				valueOutput(e.target);
 			});
@@ -250,13 +265,13 @@
 					console.log('position: ' + position, 'value: ' + value);
 				},
 
-				// Callback function   
+				// Callback function
 				onSlideEnd: function(position, value) {
 					console.log('onSlideEnd');
 					console.log('position: ' + position, 'value: ' + value);
 				}
 			});
-			
+
       });
 		</script>
 	</body>

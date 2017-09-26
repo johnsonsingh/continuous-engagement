@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed');
+
+@keyframes buttonHover {
+    0%    {color: white;}
+    50%   {color: red;}
+    100%  {color: white;}
+}
+
+
+.newnav{
+  width: 100%;
+  height: 75px;
+
+  z-index: 1;
+
+  border-bottom-color: rgba(255, 0, 0, 0.8);
+  border-bottom-style: solid;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.logo{
+  width: 80px;
+  height: 80px;
+}
+
+nav > ul{
+  text-align: center;
+  list-style: none;
+}
+
+li {
+  display: inline-block;
+}
+
+li > a{
+  font-family: "Roboto Condensed", "Impact", sans-serif;
+  font-weight: 100;
+  font-size: 20px;
+  color: white;
+
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+
+  margin: 0;
+  padding: 20px 50px;
+  display: block;
+}
+
+.navButton:hover{
+  text-decoration: none;
+  color: white;
+
+  animation-name: buttonHover;
+  animation-duration: 4s;
+}
+
+.navButton:active{
+  text-decoration: none;
+  background-color: black;
+}

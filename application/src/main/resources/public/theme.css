@@ -1,7 +1,44 @@
-body {
+@import url('https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed');
+
+@keyframes background{
+    0% {background-color: rgba( 39,143,148,1) }	/* Main Primary color */
+    5% {background-color: rgba( 28,202,211,1) }
+    10% {background-color: rgba( 35,172,179,1) }
+    15% {background-color: rgba( 45,125,129,1) }
+    20% {background-color: rgba( 49,107,110,1) }
+
+    25% {background-color: rgba(216, 57,110,1) }	/* Main Secondary color (1) */
+    30% {background-color: rgba(242, 31,102,1) }
+    35% {background-color: rgba(232, 44,107,1) }
+    40% {background-color: rgba(189, 64,106,1) }
+    45% {background-color: rgba(161, 70,101,1) }
+
+    50% {background-color: rgba(137,220, 58,1) }	/* Main Secondary color (2) */
+    55% {background-color: rgba(135,244, 31,1) }
+    60% {background-color: rgba(138,235, 45,1) }
+    65% {background-color: rgba(127,192, 65,1) }
+    70% {background-color: rgba(116,163, 72,1) }
+
+    75% {background-color: rgba(245,148, 64,1) }	/* Main Complement color */
+    80% {background-color: rgba(255,135, 33,1) }
+    85% {background-color: rgba(255,144, 48,1) }
+    90% {background-color: rgba(214,138, 73,1) }
+    100% {background-color: rgba(182,127, 80,1) }
+}
+
+  body {
   padding-top: 70px;
   padding-bottom: 30px;
+
+  height: 100%;
+  width: 100%;
+
+  animation-name: background;
+  animation-duration: 300s;
+  animation-iteration-count: 4000;
+  transition-timing-function: step-start;
 }
+
 
 .theme-dropdown .dropdown-menu {
   position: static;
@@ -15,4 +52,26 @@ body {
 
 .theme-showcase .navbar .container {
   width: auto;
+}
+
+h1 {
+  font-weight: bold;
+  font-family: "Roboto Condensed", "Impact", sans-serif;
+
+  text-align: center;
+  text-transform: uppercase;
+}
+
+h1, h2{
+  color: white;
+}
+
+.headerRed{
+  border-bottom-color: red;
+}
+
+#buttonSub {
+  color: red;
+  background-color: blue:
+
 }
