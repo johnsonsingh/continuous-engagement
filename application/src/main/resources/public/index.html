@@ -17,6 +17,7 @@
 		<link href="./theme.css" rel="stylesheet">
 		<!-- link rel="stylesheet" href="./surveyStyle.css" -->
 		<link href="./newnav.css" rel="stylesheet">
+		<script style="javascript" link="./dropdown.js"></script>
 
 	</head>
 	<body role="document">
@@ -60,6 +61,21 @@
 				<div class="page-header headerRed">
 					<h1>Engagement Survey Project 002</h1>
 				</div>
+
+					<div>
+						<select id="selectTeam">
+							<option>0</option>
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5</option>
+						</select>
+						<button id="testButton"></button>
+
+					</div<
+
+
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h3>Achievement [contribution, results, satisfaction]</h3>
@@ -105,10 +121,10 @@
 						</div>
 					</div>
 					<!-- button cannot have id "submit"  -->
-					<button id="buttonSub" type="submit" class="btn btn-primary">Submit</button>
+					<button id="buttonSub" type="submit" class="buttonText">Submit</button>
 			</div> <!-- /container -->
 		</form>
- 		<div id="resultDiv" class="container theme-showcase" role="main"></div>
+ 		<div id="resultDiv" class="container theme-showcase alertBox buttonText" role="main"></div>
 		<script src="./jquery-1.11.3.js"></script>
 		<script src="./rangeslider.js"></script>
 		<script src="./d3.min.js"></script>
@@ -148,8 +164,8 @@
 			}
 
 			function displaySuccess(){
-				$('#resultDiv').append('<div id="alert"><strong>Thank you for your input.</strong></div>');
-		      $('#alert').addClass('alert alert-success').data('role','alert');
+				$('#resultDiv').append('<div id="alert" class="alertBox"><strong>Thank you for your input.</strong></div>');
+		      $('#alert').addClass('well alert-success').data('role','alert');
          }
 
 			function displayIndividualResult(dataArray){
