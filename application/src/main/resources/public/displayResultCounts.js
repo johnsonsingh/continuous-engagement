@@ -25,7 +25,7 @@ function displayResultCounts(data, resultDiv){
 
 	 var x = d3.scale.linear()
 				.rangeRound([0, width]);
-	 
+
 	 var color = d3.scale.ordinal()
 				.range(["#ff0329", "#ff798d", "#cccccc", "#aeffa0", "#29ff03"]);
 
@@ -48,7 +48,7 @@ function displayResultCounts(data, resultDiv){
 	 var likertScale = [];
 	 data.forEach(function(d) {
 		  likertScale.push(translateSurveyResultForD3(d));
-	 });					
+	 });
 	 likertScale.forEach(function(d) {
 		  // calc percentages
 		  d["Strongly disagree"] = +d[1]*100/d[6];

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+		<title>Counts over times</title>
+		<!-- Bootstrap core CSS -->
+		<link href="./bootstrap.min.css" rel="stylesheet">
+		<!-- Bootstrap theme -->
+		<link href="./bootstrap-theme.min.css" rel="stylesheet">
+		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+		<link href="./ie10-viewport-bug-workaround.css" rel="stylesheet">
+		<!-- Custom styles for this template -->
+		<link href="./theme.css" rel="stylesheet">
+		<!-- link rel="stylesheet" href="./surveyStyle.css" -->
+		<link href="./newnav.css" rel="stylesheet">
+
+	</head>
+	<body role="document">
+		<div class="newnav">
+		<nav style="">
+			<ul>
+				<li><a href="https://www.ig.com/uk"><img class="logo" src="https://a.c-dn.net/c/etc/designs/onedomain/1505319256000/images/og_image.jpg" ></li></a>
+				<li><a class="navButton" href="index.html">Home</a></li>
+				<li><a class="navButton" href="#about">About</a></li>
+				<li><a class="navButton" href="#contact">Contact</a></li>
+				<li><a class="navButton" href="reports.html">Reports</a></li>
+				<li><a class="navButton" href="rangeCounts.html">Report History</a></li>
+			</ul>
+		</nav>
+		</div>
+
+		<form id="range" action="" method="get">
+			<!-- Fixed navbar -->
+			<div class="container theme-showcase" role="main">
+
+				<div class="page-header headerRed">
+					<h1>Results History</h1>
+				</div>
+
+				<input type="text" id="from" name="from" placeholder="YYYYY-MM-DD"></input>
+				<input type="text" id="to" name="to" placeholder="YYYYY-MM-DD"></input>
+				<input id="rangeButton" type="submit" value="Submit" class="buttonText"></input>
+
+			</div>
+		</form>
+ 		<div id="resultDiv" class="container theme-showcase" role="main"></div>
+		<div id="hideDiv" class="container theme-showcase" role="main"></div>
+
+		<script src="./jquery-1.11.3.js"></script>
+		<script src="./d3.min.js"></script>
+		<script src="./displayResultCounts.js"></script>
+
+		<script>
+			function displayIndividualResult(dataArray,resultDiv){
+				var margin = {top: 20, right: 20, bottom: 40, left:80},
+					width = 800 - margin.left - margin.right,
+					height = 400 - margin.top - margin.bottom;
+
+				var x = d3.scale.linear()
+	//					.domain(d3.extent(dataArray, function(d) { return d[1]; })).nice()
+					.domain([-2,2])
+					.range([0, width]);
+
+				var y = d3.scale.ordinal()
+					.domain(dataArray.map(function(d) { return d[0]; }))
+					.rangeRoundBands([0, height], 0.1);
+
+				var xAxis = d3.svg.axis()
+					.scale(x)
+					.orient("bottom")
+					.ticks(5);
+
+				var yAxis = d3.svg.axis()
+					.scale(y)
+					.orient("left")
+					.tickSize(0)
+					.tickPadding(6);
+
+				var svg = resultDiv.append("svg")
+					.attr("width", width + margin.left + margin.right)
+					.attr("height", height + margin.top + margin.bottom)
+					.append("g")
+					.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+				//TODO add reset link URL for link back to initialised survey
+
+				var color = d3.scale.ordinal()
+					.range(["#ff0329", "#ff798d", "#cccccc", "#aeffa0", "#29ff03"]);
+				color.domain([-2,-1,0,1,2]);
+
+				svg.selectAll(".bar")
+					.data(dataArray)
+					.enter().append("rect")
+					//.attr("class", function(d) { return "bar bar--" + (d[1] < 0 ? "negative" : "positive"); })
+					.style("fill", function(d) { return color(d[1]); })
+					.attr("x", function(d) { return x(Math.min(0, d[1])); })
+					.attr("y", function(d) { return y(d[0]); })
+					.attr("width", function(d) { return Math.abs(x(d[1]) - x(0)); })
+					.attr("height", y.rangeBand());
+
+				svg.append("g")
+					.attr("class", "x axis")
+					.attr("transform", "translate(0," + height + ")")
+					.call(xAxis);
+
+				svg.append("g")
+					.attr("class", "y axis")
+				//	.attr("transform", "translate(" + x(0) + ",0)")
+					.attr("transform", "translate(0,0)")
+					.style("font" ,"10px sans-serif")
+					.call(yAxis);
+
+				svg.append("g")
+					.attr("class", "y axis")
+					.append("line")
+					.attr("x1", x(0))
+					.attr("x2", x(0))
+					.attr("y2", height);
+			}
+
+		$("#rangeButton").click( function() {
+			var fromDate = $("#from").val();
+			var toDate = $("#to").val();
+      console.log("fromDate " + fromDate + ", toDate" + toDate);
+
+			var resultDiv = d3.select("#resultDiv");
+			//TODO add error handling
+			$.ajax({
+				url : "http://localhost:8080/results/date/",
+				type: "GET",
+				data: $('#range').serialize()}
+			).done(function(data) {
+				result = data[0];
+				var dataArray = [];
+				dataArray.push(new Array("achievement",result.achievement));
+				dataArray.push(new Array("engagement",result.engagement));
+				dataArray.push(new Array("development",result.development));
+				dataArray.push(new Array("culture",result.culture));
+
+				displayIndividualResult(dataArray, resultDiv);
+				displayResultCounts(dataArray, resultDiv);
+				//test hideDiv^^
+			});
+			return false;
+		});
+		</script>
+	</body>
+</html>

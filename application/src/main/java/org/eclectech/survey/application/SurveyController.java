@@ -33,7 +33,7 @@ public class SurveyController {
 
 	@Autowired
 	private MongoPersistence mongoPersistence;
-	
+
 	//TODO should be POST
 	@RequestMapping(value="/survey", method = RequestMethod.GET)
 	public List<SurveyResultCount> submitSurvey(@RequestParam(name="user",defaultValue=ANONYMOUS) String user, @RequestParam("achievement") int achievement,
@@ -49,7 +49,7 @@ public class SurveyController {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param user
 	 * @return all results for user
 	 */
@@ -60,7 +60,7 @@ public class SurveyController {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param user
 	 * @param dateAsString
 	 *            - format YYYYY-MM-DD
@@ -96,13 +96,13 @@ public class SurveyController {
 		Instant now = Instant.now();
 		return getResultCountsForDay(now);
 	}
-	
+
 	@RequestMapping(value="/resultCounts/date/{dateAsString}", method = RequestMethod.GET)
 	public List<SurveyResultCount> getResultCounts(@PathVariable String dateAsString) {
 		logger.debug("getResultCounts for date {}", dateAsString);
 		return getResultCountsForDay(parseDateStringAtStartOfDay(dateAsString));
 	}
-	
+
 	private List<SurveyResultCount> getResultCountsForDay(Instant instant) {
 		List<SurveyResultCount> surveyResultCounts = new ArrayList<SurveyResultCount>();
 		surveyResultCounts.add(SurveyResultCountUtil.create(SurveyCategories.ACHIEVEMENT,instant,this.surveyResults));
@@ -114,7 +114,7 @@ public class SurveyController {
 
 	/**
 	 * returns <code>Instant</code> for received date string
-	 * 
+	 *
 	 * @param dateAsString
 	 *            format YYYYY-MM-DD
 	 * @return <code>Instant</code>

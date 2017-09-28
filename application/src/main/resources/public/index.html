@@ -17,31 +17,10 @@
 		<link href="./theme.css" rel="stylesheet">
 		<!-- link rel="stylesheet" href="./surveyStyle.css" -->
 		<link href="./newnav.css" rel="stylesheet">
-		<script style="javascript" link="./dropdown.js"></script>
+
 
 	</head>
 	<body role="document">
-		<!-- <nav class="navbar navbar-inverse navbar-fixed-top">
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="index.html">Continuous Engagement</a>
-				</div>
-				<div id="navbar" class="navbar-collapse collapse">
-					<ul class="nav navbar-nav">
-						<li><a href="#about">About</a></li>
-						<li><a href="#contact">Contact</a></li>
-						<li><a href="reports.html">Reports</a></li>
-					</ul>
-				</div> .nav-collapse
-			</div>
-		</nav> -->
-
 		<div class="newnav">
 		<nav style="">
 			<ul>
@@ -50,6 +29,7 @@
 				<li><a class="navButton" href="#about">About</a></li>
 				<li><a class="navButton" href="#contact">Contact</a></li>
 				<li><a class="navButton" href="reports.html">Reports</a></li>
+				<li><a class="navButton" href="rangeCounts.html">Report History</a></li>
 			</ul>
 		</nav>
 		</div>
@@ -61,20 +41,6 @@
 				<div class="page-header headerRed">
 					<h1>Engagement Survey Project 002</h1>
 				</div>
-
-					<div>
-						<select id="selectTeam">
-							<option>0</option>
-							<option>1</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
-							<option>5</option>
-						</select>
-						<button id="testButton"></button>
-
-					</div<
-
 
 					<div class="panel panel-default">
 						<div class="panel-heading">
@@ -250,7 +216,7 @@
 				$.ajax({
 					url : "http://localhost:8080/survey",
 					type: "GET",
-				   data: $('#survey').serialize()}
+				  data: $('#survey').serialize()}
 				).done(function(data) {
 					$('#survey').hide();
 					var dataArray = [];
@@ -258,7 +224,7 @@
 					dataArray.push(new Array("engagement",engage));
 					dataArray.push(new Array("development",development));
 					dataArray.push(new Array("culture",culture));
-					displaySuccess();
+					//displaySuccess();
 					displayIndividualResult(dataArray);
 					displayResultCounts(data, resultDiv);
 				});

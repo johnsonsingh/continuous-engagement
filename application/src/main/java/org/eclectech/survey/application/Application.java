@@ -55,7 +55,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class Application {
 
 	private static Logger logger = LoggerFactory.getLogger(Application.class);
-	
+
 	@Inject
 	private Environment env;
 
@@ -138,13 +138,13 @@ public class Application {
 				false, // enableJsonEditor => true | false
 				true); // showRequestHeaders => true | false
 	}
-	
+
 	@Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurerAdapter() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/*").allowedOrigins("http://localhost");
+                registry.addMapping("/**").allowedOrigins("http://localhost");
             }
         };
     }

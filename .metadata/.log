@@ -1,0 +1,150 @@
+!SESSION 2017-09-28 15:52:32.058 -----------------------------------------------
+eclipse.buildId=4.5.1.M20150904-0015
+java.version=1.8.0_66
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_GB
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.pde.api.tools 4 0 2017-09-28 15:52:33.140
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.pde.api.tools [444]
+  Bundle was not resolved because of a uses contraint violation.
+  org.osgi.service.resolver.ResolutionException: Uses constraint violation. Unable to resolve resource org.eclipse.pde.api.tools [osgi.identity; osgi.identity="org.eclipse.pde.api.tools"; type="osgi.bundle"; version:Version="1.0.701.v20150831-1041"; singleton:="true"] because it is exposed to package 'org.objectweb.asm' from resources org.objectweb.asm [osgi.identity; osgi.identity="org.objectweb.asm"; type="osgi.bundle"; version:Version="5.0.1.v201404251740"] and com.mountainminds.eclemma.asm [osgi.identity; osgi.identity="com.mountainminds.eclemma.asm"; type="osgi.bundle"; version:Version="2.3.3.201602231923"] via two dependency chains.
+
+Chain 1:
+  org.eclipse.pde.api.tools [osgi.identity; osgi.identity="org.eclipse.pde.api.tools"; type="osgi.bundle"; version:Version="1.0.701.v20150831-1041"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.objectweb.asm)(&(bundle-version>=5.0.1)(!(bundle-version>=6.0.0))))
+     |
+    provide: osgi.wiring.bundle: org.objectweb.asm
+  org.objectweb.asm [osgi.identity; osgi.identity="org.objectweb.asm"; type="osgi.bundle"; version:Version="5.0.1.v201404251740"]
+
+Chain 2:
+  org.eclipse.pde.api.tools [osgi.identity; osgi.identity="org.eclipse.pde.api.tools"; type="osgi.bundle"; version:Version="1.0.701.v20150831-1041"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.objectweb.asm.tree)(&(bundle-version>=5.0.1)(!(bundle-version>=6.0.0))))
+     |
+    provide: osgi.wiring.bundle; bundle-version:Version="5.0.1.v201404251740"; osgi.wiring.bundle="org.objectweb.asm.tree"
+  org.objectweb.asm.tree [osgi.identity; osgi.identity="org.objectweb.asm.tree"; type="osgi.bundle"; version:Version="5.0.1.v201404251740"]
+    import: (osgi.wiring.package=org.objectweb.asm)
+     |
+    export: osgi.wiring.package: org.objectweb.asm
+  com.mountainminds.eclemma.asm [osgi.identity; osgi.identity="com.mountainminds.eclemma.asm"; type="osgi.bundle"; version:Version="2.3.3.201602231923"]
+	at org.eclipse.osgi.container.Module.start(Module.java:434)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1582)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1561)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1533)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1476)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:340)
+
+!ENTRY org.eclipse.pde.api.tools.ui 4 0 2017-09-28 15:52:33.237
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.pde.api.tools.ui [445]
+  Unresolved requirement: Require-Bundle: org.eclipse.pde.api.tools; bundle-version="1.0.600"
+    -> Bundle-SymbolicName: org.eclipse.pde.api.tools; bundle-version="1.0.701.v20150831-1041"; singleton:="true"
+       org.eclipse.pde.api.tools [444]
+         No resolution report for the bundle.  Bundle was not resolved because of a uses contraint violation.
+  org.osgi.service.resolver.ResolutionException: Uses constraint violation. Unable to resolve resource org.eclipse.pde.api.tools [osgi.identity; osgi.identity="org.eclipse.pde.api.tools"; type="osgi.bundle"; version:Version="1.0.701.v20150831-1041"; singleton:="true"] because it is exposed to package 'org.objectweb.asm' from resources org.objectweb.asm [osgi.identity; osgi.identity="org.objectweb.asm"; type="osgi.bundle"; version:Version="5.0.1.v201404251740"] and com.mountainminds.eclemma.asm [osgi.identity; osgi.identity="com.mountainminds.eclemma.asm"; type="osgi.bundle"; version:Version="2.3.3.201602231923"] via two dependency chains.
+
+Chain 1:
+  org.eclipse.pde.api.tools [osgi.identity; osgi.identity="org.eclipse.pde.api.tools"; type="osgi.bundle"; version:Version="1.0.701.v20150831-1041"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.objectweb.asm)(&(bundle-version>=5.0.1)(!(bundle-version>=6.0.0))))
+     |
+    provide: osgi.wiring.bundle: org.objectweb.asm
+  org.objectweb.asm [osgi.identity; osgi.identity="org.objectweb.asm"; type="osgi.bundle"; version:Version="5.0.1.v201404251740"]
+
+Chain 2:
+  org.eclipse.pde.api.tools [osgi.identity; osgi.identity="org.eclipse.pde.api.tools"; type="osgi.bundle"; version:Version="1.0.701.v20150831-1041"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.objectweb.asm.tree)(&(bundle-version>=5.0.1)(!(bundle-version>=6.0.0))))
+     |
+    provide: osgi.wiring.bundle; bundle-version:Version="5.0.1.v201404251740"; osgi.wiring.bundle="org.objectweb.asm.tree"
+  org.objectweb.asm.tree [osgi.identity; osgi.identity="org.objectweb.asm.tree"; type="osgi.bundle"; version:Version="5.0.1.v201404251740"]
+    import: (osgi.wiring.package=org.objectweb.asm)
+     |
+    export: osgi.wiring.package: org.objectweb.asm
+  com.mountainminds.eclemma.asm [osgi.identity; osgi.identity="com.mountainminds.eclemma.asm"; type="osgi.bundle"; version:Version="2.3.3.201602231923"]
+	at org.eclipse.osgi.container.Module.start(Module.java:434)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1582)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1561)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1533)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1476)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:340)
+!SESSION 2017-09-28 15:55:53.777 -----------------------------------------------
+eclipse.buildId=4.5.1.M20150904-0015
+java.version=1.8.0_66
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_GB
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.pde.api.tools 4 0 2017-09-28 15:55:55.920
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.pde.api.tools [444]
+  Bundle was not resolved because of a uses contraint violation.
+  org.osgi.service.resolver.ResolutionException: Uses constraint violation. Unable to resolve resource org.eclipse.pde.api.tools [osgi.identity; osgi.identity="org.eclipse.pde.api.tools"; type="osgi.bundle"; version:Version="1.0.701.v20150831-1041"; singleton:="true"] because it is exposed to package 'org.objectweb.asm' from resources org.objectweb.asm [osgi.identity; osgi.identity="org.objectweb.asm"; type="osgi.bundle"; version:Version="5.0.1.v201404251740"] and com.mountainminds.eclemma.asm [osgi.identity; osgi.identity="com.mountainminds.eclemma.asm"; type="osgi.bundle"; version:Version="2.3.3.201602231923"] via two dependency chains.
+
+Chain 1:
+  org.eclipse.pde.api.tools [osgi.identity; osgi.identity="org.eclipse.pde.api.tools"; type="osgi.bundle"; version:Version="1.0.701.v20150831-1041"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.objectweb.asm)(&(bundle-version>=5.0.1)(!(bundle-version>=6.0.0))))
+     |
+    provide: osgi.wiring.bundle: org.objectweb.asm
+  org.objectweb.asm [osgi.identity; osgi.identity="org.objectweb.asm"; type="osgi.bundle"; version:Version="5.0.1.v201404251740"]
+
+Chain 2:
+  org.eclipse.pde.api.tools [osgi.identity; osgi.identity="org.eclipse.pde.api.tools"; type="osgi.bundle"; version:Version="1.0.701.v20150831-1041"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.objectweb.asm.tree)(&(bundle-version>=5.0.1)(!(bundle-version>=6.0.0))))
+     |
+    provide: osgi.wiring.bundle; bundle-version:Version="5.0.1.v201404251740"; osgi.wiring.bundle="org.objectweb.asm.tree"
+  org.objectweb.asm.tree [osgi.identity; osgi.identity="org.objectweb.asm.tree"; type="osgi.bundle"; version:Version="5.0.1.v201404251740"]
+    import: (osgi.wiring.package=org.objectweb.asm)
+     |
+    export: osgi.wiring.package: org.objectweb.asm
+  com.mountainminds.eclemma.asm [osgi.identity; osgi.identity="com.mountainminds.eclemma.asm"; type="osgi.bundle"; version:Version="2.3.3.201602231923"]
+	at org.eclipse.osgi.container.Module.start(Module.java:434)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1582)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1561)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1533)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1476)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:340)
+
+!ENTRY org.eclipse.pde.api.tools.ui 4 0 2017-09-28 15:55:56.108
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.pde.api.tools.ui [445]
+  Unresolved requirement: Require-Bundle: org.eclipse.pde.api.tools; bundle-version="1.0.600"
+    -> Bundle-SymbolicName: org.eclipse.pde.api.tools; bundle-version="1.0.701.v20150831-1041"; singleton:="true"
+       org.eclipse.pde.api.tools [444]
+         No resolution report for the bundle.  Bundle was not resolved because of a uses contraint violation.
+  org.osgi.service.resolver.ResolutionException: Uses constraint violation. Unable to resolve resource org.eclipse.pde.api.tools [osgi.identity; osgi.identity="org.eclipse.pde.api.tools"; type="osgi.bundle"; version:Version="1.0.701.v20150831-1041"; singleton:="true"] because it is exposed to package 'org.objectweb.asm' from resources org.objectweb.asm [osgi.identity; osgi.identity="org.objectweb.asm"; type="osgi.bundle"; version:Version="5.0.1.v201404251740"] and com.mountainminds.eclemma.asm [osgi.identity; osgi.identity="com.mountainminds.eclemma.asm"; type="osgi.bundle"; version:Version="2.3.3.201602231923"] via two dependency chains.
+
+Chain 1:
+  org.eclipse.pde.api.tools [osgi.identity; osgi.identity="org.eclipse.pde.api.tools"; type="osgi.bundle"; version:Version="1.0.701.v20150831-1041"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.objectweb.asm)(&(bundle-version>=5.0.1)(!(bundle-version>=6.0.0))))
+     |
+    provide: osgi.wiring.bundle: org.objectweb.asm
+  org.objectweb.asm [osgi.identity; osgi.identity="org.objectweb.asm"; type="osgi.bundle"; version:Version="5.0.1.v201404251740"]
+
+Chain 2:
+  org.eclipse.pde.api.tools [osgi.identity; osgi.identity="org.eclipse.pde.api.tools"; type="osgi.bundle"; version:Version="1.0.701.v20150831-1041"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.objectweb.asm.tree)(&(bundle-version>=5.0.1)(!(bundle-version>=6.0.0))))
+     |
+    provide: osgi.wiring.bundle; bundle-version:Version="5.0.1.v201404251740"; osgi.wiring.bundle="org.objectweb.asm.tree"
+  org.objectweb.asm.tree [osgi.identity; osgi.identity="org.objectweb.asm.tree"; type="osgi.bundle"; version:Version="5.0.1.v201404251740"]
+    import: (osgi.wiring.package=org.objectweb.asm)
+     |
+    export: osgi.wiring.package: org.objectweb.asm
+  com.mountainminds.eclemma.asm [osgi.identity; osgi.identity="com.mountainminds.eclemma.asm"; type="osgi.bundle"; version:Version="2.3.3.201602231923"]
+	at org.eclipse.osgi.container.Module.start(Module.java:434)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1582)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1561)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1533)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1476)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:340)
