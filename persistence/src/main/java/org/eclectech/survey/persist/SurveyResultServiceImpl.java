@@ -58,8 +58,9 @@ public class SurveyResultServiceImpl implements SurveyResultService {
 	@Override
 	public List<SurveyResult> getAverageSurveyResults(Instant fromInstant, Instant toInstant) {
 		logger.info("query for fromInstant {} toInstant {}", fromInstant, toInstant);
+        toInstant = toInstant.plus(Duration.ofDays(1));
 		TypedAggregation<SurveyResult> aggregation = newAggregation(SurveyResult.class,
-				match(Criteria.where("instant").gte(fromInstant).lt(toInstant)),
+				match(Criteria.where("instant").gte(fromInstant).lte(toInstant)),
 				group("user").avg("achievement").as("achievement").avg("culture").as("culture").avg("development")
 						.as("development").avg("engagement").as("engagement"));
 		AggregationResults<DBObject> result = mongoPersistenceImpl.getMongoTemplate().aggregate(aggregation,
