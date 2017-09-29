@@ -58,5 +58,5 @@ li > a{
 
 .navButton:active{
   text-decoration: none;
-  background-color: black;
+  color: black;
 }
